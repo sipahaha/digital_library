@@ -73,7 +73,7 @@
         <a href="#" class="btn btn-danger">View All →</a>
         <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-left: 60px;">
             <?php
-                     $sqlReslt = $pdo->prepare("SELECT * FROM buku");
+                     $sqlReslt = $pdo->prepare("SELECT * FROM tb_buku");
                      $sqlReslt->execute();
                 
                 while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
