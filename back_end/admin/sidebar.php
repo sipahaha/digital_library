@@ -15,7 +15,7 @@
 }
 
 .sidebar ul li {
-    padding: 12px;
+    padding: 9px;
 }
 
 .sidebar ul li a {
@@ -25,8 +25,25 @@
     align-items: center;
 }
 
+.sidebar ul li a:hover {
+    color: #FF9D23;
+}
+
 .sidebar ul li a i {
     margin-right: 10px;
+    font-size: 18px;
+}
+
+.sidebar .nav-link.active {
+    background-color: #003092;
+    color:   #FFF2DB;
+    border-radius: 5px;
+    height: 50px;
+}
+.sidebar .nav-link.active:hover {
+    background-color:  #FF9D23;
+    color: #003092;
+    border-radius: 5px;
 }
 
 .sidebar button {
@@ -36,7 +53,7 @@
     font-size: medium;
     bottom: 10px;
     margin-left: 30px;
-    margin-bottom : 10px;
+    margin-bottom: 10px;
 }
 
 .sidebar button:hover {
@@ -44,28 +61,45 @@
     border-color: #FF9D23;
     color: #003092;
 }
+
+.dropdown-menu {
+    background-color: #FFF2DB;
+    color: #003092;
+
+}
+
+.dropdown-menu a:hover {
+    background-color: #FFF2DB;
+    color: #FF9D23;
+
+}
 </style>
 <nav class="sidebar">
     <div class="logo mb-4 mt-4">
         <img src="../../asset/img/image11.png" alt="" width="auto" height="75">
     </div>
+    <!--<i class="bi bi-archive">-->
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a href="pages/databuku.php" class="nav-link active"><i class="bi bi-archive"></i>Data Buku</a>
+            <a href="?page=dashboard" class="nav-link active "><i class="bi-house-door-fill"></i>Dashboard</a>
         </li>
         <li class="nav-item">
-            <a href="pages/datapengguna.php" class="nav-link "><i class="bi bi-person-bounding-box"></i>Data
+            <a href="?page=daftar_buku" class="nav-link "><i class="bi-archive"></i>Daftar
+                Buku</a>
+        </li>
+        <li class="nav-item">
+            <a href="?page=data_user" class="nav-link "><i class="bi bi-person-bounding-box"></i>Data
                 Pengguna</a>
         </li>
         <li class="nav-item">
-            <a href="pages/datapetugas.php" class="nav-link"><i class="bi-person-badge"></i>Tambah Petugas</a>
+            <a href="?page=input_petugas" class="nav-link"><i class="bi-person-badge"></i>Tambah Petugas</a>
         </li>
         <li class="nav-item">
-            <a href="pages/datapeminjaman.php" class="nav-link"><i class="bi bi-clipboard-data"></i>Riwayat
+            <a href="?page=data_peminjaman" class="nav-link"><i class="bi bi-clipboard-data"></i>Riwayat
                 Peminjaman</a>
         </li>
         <li class="nav-item">
-            <a href="pages/dataulasan.php" class="nav-link"><i class="bi-file-text"></i>Riwayat Ulasan</a>
+            <a href="?page=data_ulasan" class="nav-link"><i class="bi-file-text"></i>Riwayat Ulasan</a>
         </li>
     </ul>
 

@@ -70,7 +70,7 @@
 <div class="content-4" id="categories">
     <div class="container my-5">
         <h2>Recomendation For You</h2>
-        <a href="#" class="btn btn-danger">View All →</a>
+        <a href="" class="btn btn-danger">View All →</a>
         <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-left: 60px;">
             <?php
                      $sqlReslt = $pdo->prepare("SELECT * FROM tb_buku");
