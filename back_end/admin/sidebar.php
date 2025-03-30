@@ -15,7 +15,8 @@
 }
 
 .sidebar ul li {
-    padding: 9px;
+    padding: 5px;
+    
 }
 
 .sidebar ul li a {
@@ -23,6 +24,7 @@
     text-decoration: none;
     display: flex;
     align-items: center;
+    font-size: 15px;
 }
 
 .sidebar ul li a:hover {
@@ -86,6 +88,10 @@
         <li class="nav-item">
             <a href="?page=daftar_buku" class="nav-link "><i class="bi-archive"></i>Daftar
                 Buku</a>
+        </li>
+        <li class="nav-item">
+            <a href="?page=daftar_kat" class="nav-link "><i class="bi-file-earmark-text"></i></i>Daftar
+                Kategori Buku</a>
         </li>
         <li class="nav-item">
             <a href="?page=data_user" class="nav-link "><i class="bi bi-person-bounding-box"></i>Data

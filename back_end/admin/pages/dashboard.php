@@ -8,125 +8,89 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-    .card {
+    .col-lg-12 {
         background-color: #FFF2DB;
         color: #003092;
-        width: 80%;
+        width: 70%;
         border-radius: 20px;
     }
 
-    .text-card {
+    .col-lg-12 .text {
         margin-top: 30px;
         margin-left: 50px;
     }
 
-    .text-card h5 {
+    .col-lg-12 .text h5 {
         font-family: aes;
     }
 
-    .text-card p {
+    .col-lg-12 .text p {
         font-family: biasa;
         font-size: 13px;
     }
 
     .content-4 {
-        margin-top: 50px;
+        margin-top: 100px;
     }
 
     .content-4 h5 {
-        color: #003092;
         font-family: aes;
-        text-align: left;
+        color: #003092;
+
+    }
+    .col-md-4:hover{
+        transform: scale(1.1,1.1);
+    }
+    .col-md-4 a{
+        text-decoration: none;
+    }
+    .content-4 .btn {
+        color: #003092;
+        background-color: #FF9D23;
+        font-size: 14px;
+        float: right;
     }
 
-    /* 
-.content-4 .col-md-3 {
-    margin-top: 100px;
-}
-
-.content-4 .card {
-    width: min-content;
-}
-.content-4 .card:hover{
-    transform: scale(1.1, 1.1);
-}
-
-.content-4 .card img {
-    width: 200px;
-    height: auto;
-    border-radius: 5px;
-}
-
-.card-title {
-    color: #003092;
-    font-family: aes;
-}
-
-.card-text {
-    color: #FF9D23;
-    font-size: small;
-}
-
-.card a {
-    font-family: biasa;
-    background-color: #FF9D23;
-    color: #003092;
-    font-size: 14px;
-}
-
-.card a:hover {
-    font-family: biasa;
-    border-style: solid 1px 1px;
-    border-color: #FF9D23;
-    color: #003092;
-} */
-    .book-card img {
-        height: 250px;
-        object-fit: cover;
+    .content-4 .btn:hover {
+        border-color: #FF9D23;
+        color: #003092;
     }
-
-    .book-card {
-        text-align: center;
+    .detail b{
+        font-family: aes;
+        color: #003092;
+        font-size: 14px;
     }
-
-    .book-card:hover {
-        transform: scale(1.1, 1.1);
+    .detail i{
+        font-family: biasa;
+        color: #003092;
+        font-size: 12.5px;
+        opacity: 0.6;
     }
-
-    .price {
-        color: #d9534f;
-        font-weight: bold;
-    }
-    .content-4 a{
-      float: right;
-      font-size: 13px;
+    .detail p{
+        color: #FF9D23
     }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="card">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="text-card">
-                        <h5>Hello World !!</h5>
-                        <p class="pt-2">Eterna Libri is more than just a digital library. We provide an exclusive,
-                            elegant and
-                            Start reading today and be part of a limitless literacy journey!</p>
-                    </div>
+        <div class="row">
+            <div class="col-lg-12 d-flex">
+                <div class="text">
+                    <h5>Hello World !!</h5>
+                    <p class="pt-2">Eterna Libri is more than just a digital library. We provide an exclusive,
+                        elegant and
+                        Start reading today and be part of a limitless literacy journey!</p>
                 </div>
-                <div class="col-lg-6 justify-content-center">
-                    <img src="../../asset/img/admin.png" alt="" height="200" width="auto" style="margin-left: 60px;">
-                </div>
+                <img src="../../asset/img/admin.png" alt="" height="200">
             </div>
         </div>
     </div>
-    <div class="content-4" id="categories">
+    <div class="content-4">
         <div class="container my-5">
             <h5>Buku Rating Tertinggi</h5>
-            <a href="" class="btn btn-danger mt-4">View All →</a>
-            <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-left: 60px;">
+            <a href="" class="btn btn-md mt-4 mb-4">View All →</a>
+            <div class="row" style="margin-left: 60px;">
                 <?php
                      $sqlReslt = $pdo->prepare("SELECT * FROM tb_buku");
                      $sqlReslt->execute();
@@ -134,15 +98,16 @@
                 while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
                     ?>
 
-                <div class="col">
-                    <div class="card book-card">
-                        <img src="coverbook/<?=$rowResult['gambar']?>" class="card-img-top" alt="Heartland Stars">
-                        <div class="card-body">
-                            <h5 class="card-title"><?=$rowResult['judul']?></h5>
-                            <p class="card-text"><?=$rowResult['penulis']?></p>
-                            <a href="#" class="btn btn-danger">View a Book</a>
-                        </div>
+                <div class="col-md-4 mt-4 d-flex">
+                   <a href=""> <div class="cover">
+                        <center><img src="../../cover_book/<?=$rowResult['gambar_buku']?>" alt="" width="170"></center>
                     </div>
+                    <div class="detail text-center">
+                        <b><?=$rowResult['judul']?></b><br>
+                        <i><?=$rowResult['penulis']?></i>
+                        <p>4,6</p>
+                    </div>
+                    </a>
                 </div>
                 <?php
                 }

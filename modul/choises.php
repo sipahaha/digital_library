@@ -81,7 +81,7 @@
 
             <div class="col">
                 <div class="card book-card">
-                    <img src="coverbook/<?=$rowResult['gambar']?>" class="card-img-top" alt="Heartland Stars">
+                    <img src="cover_book/<?=$rowResult['gambar_buku']?>" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title"><?=$rowResult['judul']?></h5>
                         <p class="card-text"><?=$rowResult['penulis']?></p>

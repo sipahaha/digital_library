@@ -9,12 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $publisher = $_POST['publish'];
     $year = $_POST['year'];
     $file = $_FILES['gbr']['name'];
-    $folder = '../../../cover_book/';
+    $folder = '../../cover_book/';
 
     if(isset($_FILES['gbr']) && $_FILES['gbr']['error'] == 0) {
         move_uploaded_file($_FILES['gbr']['tmp_name'], $folder.$file);
 
-        $sql = "INSERT INTO tb_buku (id_buku, id_kategori, judul, penulis, penerbit, tahun_terbit, gambar_buku) VALUES (:id, :title, :categories, :writter, :publisher, :year, :file)";
+        $sql = "INSERT INTO tb_buku (id_buku, judul, id_kategori, penulis, penerbit, tahun_terbit, gambar_buku) VALUES (:id, :title, :categories, :writter, :publisher, :year, :file)";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":title", $title);
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(":file", $file);
 
         if ($stmt->execute()) {
-            header("Location: data_buku.php");
+            header("Location: ?page=daftar_buku");
             exit();
         }else{
             echo "Silahkan Input Kembali";
@@ -48,11 +48,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+    .container {
+        font-size: 14px;
+        font-family: biasa;
+        color: #003092;
+    }
+
+    .col-md-8 {
+        margin-top: 30px;
+    }
+
+    .col-md-8 h4 {
+        font-family: aes;
+        color: #003092;
+
+    }
+
     .btn {
         background-color: #FF9D23;
         width: 100px;
         height: auto;
         float: right;
+        font-size: 14px;
+        
     }
 
     .btn:hover {
@@ -64,9 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <form action="" method="post">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <center>
+                    <h4 class="mb-4">Tambah Buku</h4>
+                </center>
+                <form action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id_buku">
                     <div class="mb-3">
                         <label>Judul Buku</label>
@@ -74,18 +95,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="mb-3">
                         <label>Kategori Buku</label>
-                        <select name="categories">
+                        <select name="categories" class="form-control">
                             <?php
-                        $sqlkat = "SELECT * FROM tb_kategoribuku";
-                        $stmt =$pdo->prepare($sqlkat);
-
-                        $categories = $sqlkat->fetchAll(PDO::FETCH_ASSOC);
-                        foreach ($categories as $result) {
-                            echo "<option value='".$result['id_kategori']."'>'".$result['nama_kategori']."'</option>";
-                        }
-                        ?>
+                                $sqlkat = "SELECT * FROM tb_kategoribuku";
+                                $stmt = $pdo->prepare($sqlkat);
+                                $stmt->execute();
+                                
+                                $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                foreach ($categories as $result) {
+                                    echo "<option value='".$result['id_kategori']."'>".$result['nama_kategori']."</option>";
+                                }
+        ?>
                         </select>
                     </div>
+
                     <div class="mb-3">
                         <label>Penulis Buku</label>
                         <input type="text" name="writter" class="form-control">

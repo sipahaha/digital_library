@@ -12,11 +12,27 @@ include "../../lib/koneksi.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <style>
+
+    h3 {
+        font-family: aes;
+        color: #003092;
+    }
+
+    th {
+        font-family: biasa;
+
+    }
+    tbody tr td{
+        font-size: 14px;
+        color: #003092;
+    }
+    </style>
 </head>
 
 <body>
     <center>
-        <h3>Data Peminjaman</h3>
+        <h3 class="mt-3 mb-4">Data Peminjaman</h3>
     </center>
 
     <!-- tabel -->
@@ -25,17 +41,17 @@ include "../../lib/koneksi.php";
             <table class="table table-hover align-middle">
                 <thead class="table">
                     <tr>
-                        <th>No</th>
-                        <th>Nama Pengguna</th>
-                        <th>Judul Buku</th>
-                        <th>Tanggal Peminjaman</th>
-                        <th>Tanggal Pengembalian</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th style="color: #003092;">No</th>
+                        <th style="color: #003092;">Nama Pengguna</th>
+                        <th style="color: #003092;">Judul Buku</th>
+                        <th style="color: #003092;">Tanggal Peminjaman</th>
+                        <th style="color: #003092;">Tanggal Pengembalian</th>
+                        <th style="color: #003092;">Status</th>
+                        <th style="color: #003092;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                      <?php
+                    <?php
                             $no = 1;
                             $sql = "SELECT a.id_peminjaman, b.username, c.judul, a.tanggal_peminjaman, a.tanggal_pengembalian, a.status_peminjaman
                                     FROM tb_peminjaman a

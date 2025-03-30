@@ -37,11 +37,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>Input Petugas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
+    .container {
+        font-size: 14px;
+        font-family: biasa;
+        color: #003092;
+    }
+    .col-md-8{
+        margin-top: 70px;
+    }
+    .col-md-8 h4{
+        font-family: aes;
+        color: #003092;
+
+    }
+    .form{
+        padding: 10px;
+    }
       .btn {
         background-color: #FF9D23;
         width: 100px;
         height: auto;
         float: right;
+        font-size: 14px;
     }
 
     .btn:hover {
@@ -51,10 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   </style>
 </head>
   <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <form action="" method="post">
+    <div class="container ">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <center><h4 class="mb-4">Tambah Akun Petugas</h4></center>
+                <form action="" method="post" class="rounded shadow-sm">
                 <input type="hidden" name="id">
                     <div class="mb-3">
                         <label>Nama Pengguna</label>

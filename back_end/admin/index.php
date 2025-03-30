@@ -67,10 +67,11 @@ include "../../lib/koneksi.php";
               if($page=='input_petugas'){
                 include "pages/input_petugas.php";
               }
-            }else{
               if($page=='dashboard'){
-              include "pages/dashboard.php";
+                include "pages/dashboard.php";
               }
+            }else{
+              include "pages/dashboard.php";
             }
         
       ?>
