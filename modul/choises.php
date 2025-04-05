@@ -8,58 +8,31 @@
     font-family: aes;
     text-align: center;
 }
-
-/* 
-.content-4 .col-md-3 {
-    margin-top: 100px;
+.card.book-card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.content-4 .card {
-    width: min-content;
-}
-.content-4 .card:hover{
-    transform: scale(1.1, 1.1);
-}
-
-.content-4 .card img {
-    width: 200px;
-    height: auto;
-    border-radius: 5px;
-}
-
-.card-title {
-    color: #003092;
-    font-family: aes;
-}
-
-.card-text {
-    color: #FF9D23;
-    font-size: small;
-}
-
-.card a {
-    font-family: biasa;
-    background-color: #FF9D23;
-    color: #003092;
-    font-size: 14px;
-}
-
-.card a:hover {
-    font-family: biasa;
-    border-style: solid 1px 1px;
-    border-color: #FF9D23;
-    color: #003092;
-} */
-.book-card img {
-    height: 250px;
+.card-img-top {
+    height: 250px; /* Gambar selalu sama tinggi */
     object-fit: cover;
+    width: 100%;
 }
 
-.book-card {
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
     text-align: center;
 }
+
 .book-card:hover{
-    transform: scale(1.1, 1.1);
+    transform: scale(1.05);
 }
 
 .price {
@@ -70,7 +43,7 @@
 <div class="content-4" id="categories">
     <div class="container my-5">
         <h2>Recomendation For You</h2>
-        <a href="" class="btn btn-danger">View All →</a>
+        <a href="#" class="btn btn-danger">View All →</a>
         <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-left: 60px;">
             <?php
                      $sqlReslt = $pdo->prepare("SELECT * FROM tb_buku");
@@ -79,8 +52,8 @@
                 while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
                     ?>
 
-            <div class="col">
-                <div class="card book-card">
+            <div class="col h-100">
+                <div class="card h-100 book-card">
                     <img src="cover_book/<?=$rowResult['gambar_buku']?>" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title"><?=$rowResult['judul']?></h5>

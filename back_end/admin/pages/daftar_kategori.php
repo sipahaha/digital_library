@@ -74,7 +74,7 @@ include "../../lib/koneksi.php";
                         <td style="color: #003092;"><?=$no++?></td>
                         <td><img width="100" src="../../gbrcategori/<?=$rowResult['gambar_kategori']?>"></td>
                         <td style="color: #003092;"><?=$rowResult['nama_kategori']?></td>
-                        <td style="color: #003092;"><a href="?page=hapus&id=<?=$rowResult['id_buku']?>"><i class="bi-trash"></i></a> <a
+                        <td style="color: #003092;"><a href="?page=hapus_kat&id=<?=$rowResult['id_kategori'];?>"><i class="bi-trash"></i></a> <a
                                 href=""><i class="bi-pencil-square"></i></a></td>
                     </tr>
                     <?php

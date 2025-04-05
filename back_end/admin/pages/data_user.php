@@ -64,7 +64,7 @@ include "../../lib/koneksi.php";
                         <td style="color: #003092;"><?=$rowResult['email']?></td>
                         <td style="color: #003092;"><?=$rowResult['alamat']?></td>
                         <td>
-                            <a href="?page=hapus&id=<?=$rowResult['id_user']?>"><i class="bi-trash"></i></a>
+                            <a href="?page=hapus_user&id=<?=$rowResult['id_user'];?>"><i class="bi-trash"></i></a>
                             <a href="?page=edit&id=<?=$rowResult['id_user']?>"><i class="bi-pencil-square"></i></a>
                         </td>
                     </tr>

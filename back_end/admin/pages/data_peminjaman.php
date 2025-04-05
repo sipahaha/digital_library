@@ -71,8 +71,8 @@ include "../../lib/koneksi.php";
                         <td><?=$rowResult['tanggal_pengembalian']?></td>
                         <td><?=$rowResult['status_peminjaman']?></td>
                         <td>
-                            <a href="?page=hapus&id=<?=$rowResult['id_peminjaman']?>"><i class="bi-trash"></i></a>
-                            <a href="?page=edit&id=<?=$rowResult['id_peminjaman']?>"><i
+                            <a href="?page=hapus_pinjam&id=<?=$rowResult['id_peminjaman'];?>"><i class="bi-trash"></i></a>
+                            <a href="?page=edit&id=<?=$rowResult['id_peminjaman'];?>"><i
                                     class="bi-pencil-square"></i></a>
                         </td>
                     </tr>

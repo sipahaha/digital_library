@@ -85,7 +85,7 @@ include "../../lib/koneksi.php";
                         <td style="color: #003092;"><?=$rowResult['penulis']?></td>
                         <td style="color: #003092;"><?=$rowResult['penerbit']?></td>
                         <td style="color: #003092;"><?=$rowResult['tahun_terbit']?></td>
-                        <td><a href="?page=hapus&id=<?=$rowResult['id_buku']?>"><i class="bi-trash"></i></a> <a
+                        <td><a href="?page=hapus_buku&id=<?=$rowResult['id_buku'];?>"><i class="bi-trash"></i></a> <a
                                 href=""><i class="bi-pencil-square"></i></a></td>
                     </tr>
                     <?php

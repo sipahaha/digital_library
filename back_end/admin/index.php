@@ -70,6 +70,24 @@ include "../../lib/koneksi.php";
               if($page=='dashboard'){
                 include "pages/dashboard.php";
               }
+              if($page=='hapus_buku'){
+                include "pages/hapus_buku.php";
+              }
+              if($page=='hapus_kat'){
+                include "pages/hapus_kat.php";
+              }
+              if($page=='hapus_user'){
+                include "pages/hapus_user.php";
+              }
+              if($page=='hapus_pinjam'){
+                include "pages/hapus_pinjam.php";
+              }
+              if($page=='hapus_ulasan'){
+                include "pages/hapus_ulasan.php";
+              }
+              if($page=='hapus_petugas'){
+                include "pages/hapus_petugas.php";
+              }
             }else{
               include "pages/dashboard.php";
             }

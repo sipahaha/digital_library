@@ -1,9 +1,8 @@
-<style>
-
-</style>
+<?php
+include "lib/koneksi.php";
+?>
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,31 +23,41 @@
         color: #f39c12;
         font-size: 1.2rem;
     }
+
+    small {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
     </style>
 </head>
 
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Testimonial Pelanggan</h2>
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="card mb-3 p-3 border-0 shadow-sm">
-                    <div class="rating">★★★★★</div>
-                    <p class="mt-2">"Layanan yang luar biasa! Saya sangat puas dengan kualitas dan pelayanannya."</p>
-                    <small class="text-muted">- Rina S.</small>
+        <div class="row d-flex">
+            <div class="col-md-8 offset-md-2 d-flex">
+                <?php
+                 $sqlReslt = $pdo->prepare("SELECT * FROM tb_ulasan");
+                 $sqlReslt->execute();
+     
+            
+            while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
+                ?>
+                <div class="card mb-3 p-3 border-0 shadow-sm" style="width: 18rem;">
+                    <div class="rating"><?=$rowResult['rating']?></div>
+                    <p><?=$rowResult['judul']?></p>
+                    <p class="mt-2"><?=$rowResult['ulasan']?></p>
+                    <small class="text-muted"><?=$rowResult['id_user']?></small>
                 </div>
-                <div class="card mb-3 p-3 border-0 shadow-sm">
-                    <div class="rating">★★★★☆</div>
-                    <p class="mt-2">"Sangat baik, tetapi ada beberapa hal yang bisa ditingkatkan."</p>
-                    <small class="text-muted">- Budi P.</small>
-                </div>
-                <div class="card mb-3 p-3 border-0 shadow-sm">
-                    <div class="rating">★★★★★</div>
-                    <p class="mt-2">"Pengalaman yang sangat menyenangkan! Pasti akan kembali lagi."</p>
-                    <small class="text-muted">- Andi K.</small>
-                </div>
+                <?php
+            }
+                ?>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
