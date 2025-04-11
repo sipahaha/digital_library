@@ -25,7 +25,6 @@ include "../../lib/koneksi.php";
 
     .content {
         margin-left: 250px;
-        /* Sesuaikan dengan lebar sidebar */
         padding: 20px;
         flex-grow: 1;
     }
@@ -43,12 +42,6 @@ include "../../lib/koneksi.php";
         <?php
       $page = isset($_GET['page'])?$_GET['page']:'';
       if ($page) {
-          if($page=='input_buku'){
-              include "pages/input_buku.php";
-            }
-            if($page=='input_kat'){
-              include "pages/input_kategori.php";
-            }
             if($page=='daftar_buku'){
                 include "pages/daftar_buku.php";
               }
@@ -64,41 +57,11 @@ include "../../lib/koneksi.php";
               if($page=='data_ulasan'){
                 include "pages/data_ulasan.php";
               }
-              if($page=='input_petugas'){
-                include "pages/input_petugas.php";
-              }
               if($page=='dashboard'){
                 include "pages/dashboard.php";
               }
-              if($page=='hapus_buku'){
-                include "pages/hapus_buku.php";
-              }
-              if($page=='hapus_kat'){
-                include "pages/hapus_kat.php";
-              }
-              if($page=='hapus_user'){
-                include "pages/hapus_user.php";
-              }
-              if($page=='hapus_pinjam'){
-                include "pages/hapus_pinjam.php";
-              }
-              if($page=='hapus_ulasan'){
-                include "pages/hapus_ulasan.php";
-              }
-              if($page=='hapus_petugas'){
-                include "pages/hapus_petugas.php";
-              }
-              if($page=='edit_buku'){
-                include "pages/edit_buku.php";
-              }
-              if($page=='edit_petugas'){
-                include "pages/edit_petugas.php";
-              }
-              if($page=='edit_kat'){
-                include "pages/edit_kat.php";
-              }
-              if($page=='edit_user'){
-                include "pages/edit_user.php";
+              if($page=='data_petugas'){
+                include "pages/daftar_petugas.php";
               }
             }else{
               include "pages/dashboard.php";

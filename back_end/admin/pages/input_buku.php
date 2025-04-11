@@ -8,13 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $writter = $_POST['writter'];
     $publisher = $_POST['publish'];
     $year = $_POST['year'];
+    $desk = $_POST['desk'];
     $file = $_FILES['gbr']['name'];
     $folder = '../../cover_book/';
 
     if(isset($_FILES['gbr']) && $_FILES['gbr']['error'] == 0) {
         move_uploaded_file($_FILES['gbr']['tmp_name'], $folder.$file);
 
-        $sql = "INSERT INTO tb_buku (id_buku, judul, id_kategori, penulis, penerbit, tahun_terbit, gambar_buku) VALUES (:id, :title, :categories, :writter, :publisher, :year, :file)";
+        $sql = "INSERT INTO tb_buku (id_buku, judul, id_kategori, penulis, penerbit, tahun_terbit, deskripsi_buku gambar_buku) VALUES (:id, :title, :categories, :writter, :publisher, :year, :desk, :file)";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":title", $title);
@@ -22,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(":writter", $writter);
         $stmt->bindParam(":publisher", $publisher);
         $stmt->bindParam(":year", $year);
+        $stmt->bindParam(":desk", $desk);
         $stmt->bindParam(":file", $file);
 
         if ($stmt->execute()) {
@@ -120,6 +122,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="mb-3">
                         <label>Tahun Terbit</label>
                         <input type="text" name="year" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>Deskripsi</label>
+                        <textarea type="text" name="desk" class="form-control"></textarea>
                     </div>
                     <div class="mb-3">
                         <label>Upload Gambar :</label>

@@ -25,7 +25,7 @@
                 while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
                     ?>
                     <div class="roman p-4">
-                        <a href="?page=categories&id=<?=$rowResult['kategoriID']?>"><img src="gbrcategori/<?=$rowResult['gambar_kategori']?>" class="rounded-circle" alt="" height="100"
+                        <a href="?page=categories&id=<?=$rowResult['id_kategori']?>"><img src="gbrcategori/<?=$rowResult['gambar_kategori']?>" class="rounded-circle" alt="" height="100"
                                 width="auto"></a><br>
                         <div class="text-book pt-4"><b><?=$rowResult['nama_kategori']?></b></div>
                     </div>

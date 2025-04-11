@@ -30,7 +30,6 @@ include "../../lib/koneksi.php";
 
     th {
         font-family: biasa;
-
     }
 
     tbody tr td {
@@ -45,10 +44,25 @@ include "../../lib/koneksi.php";
     <center>
         <h3 class="mb-4 mt-3">Daftar Buku</h3>
     </center>
-    <a href="?page=input_buku" type="button" class="btn btn-md">Input New Book</a>
 
-    <!-- tabel -->
-    <div class="container mt-5">
+    <div class="container">
+        <a href="?page=input_buku" type="button" class="btn btn-md mb-3">Input New Book</a>
+
+        <!-- Search Form -->
+        <form method="GET" action="">
+            <input type="hidden" name="page" value="daftar_buku">
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <input type="text" name="keyword" class="form-control" placeholder="Cari buku..."
+                        value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-md">Cari</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- tabel -->
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table">
@@ -60,37 +74,54 @@ include "../../lib/koneksi.php";
                         <th style="color: #003092;">Penulis</th>
                         <th style="color: #003092;">Penerbit</th>
                         <th style="color: #003092;">Tahun Terbit</th>
+                        <th style="color: #003092;">Deskripsi</th>
                         <th style="color: #003092;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-            $no = 1;
-            $sqlReslt = $pdo->prepare("
-                SELECT * FROM tb_buku a 
-                INNER JOIN tb_kategoribuku b ON a.id_kategori = b.id_kategori 
-                ORDER BY a.id_buku DESC
-            ");
-            $sqlReslt->execute(); 
-            
-            while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
-           
-            
-            ?>
+                    $no = 1;
+                    $keyword = isset($_GET['keyword']) ? '%' . $_GET['keyword'] . '%' : '%';
+
+                    $sqlReslt = $pdo->prepare("
+                        SELECT * FROM tb_buku a 
+                        INNER JOIN tb_kategoribuku b ON a.id_kategori = b.id_kategori 
+                        WHERE a.judul LIKE :judul 
+                            OR a.penulis LIKE :penulis 
+                            OR a.penerbit LIKE :penerbit 
+                            OR b.nama_kategori LIKE :kategori
+                        ORDER BY a.id_buku DESC
+                    ");
+                    
+                    $sqlReslt->bindValue(':judul', $keyword);
+                    $sqlReslt->bindValue(':penulis', $keyword);
+                    $sqlReslt->bindValue(':penerbit', $keyword);
+                    $sqlReslt->bindValue(':kategori', $keyword);
+                    
+                    $sqlReslt->execute();
+                    
+                    
+
+                    while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
                     <tr>
-                        <td style="color: #003092;"><?=$no++?></td>
-                        <td><img width="100" src="../../cover_book/<?=$rowResult['gambar_buku']?>"></td>
-                        <td style="color: #003092;"><?=$rowResult['judul']?></td>
-                        <td style="color: #003092;"><?=$rowResult['nama_kategori']?></td>
-                        <td style="color: #003092;"><?=$rowResult['penulis']?></td>
-                        <td style="color: #003092;"><?=$rowResult['penerbit']?></td>
-                        <td style="color: #003092;"><?=$rowResult['tahun_terbit']?></td>
-                        <td><a href="?page=hapus_buku&id=<?=$rowResult['id_buku'];?>"><i class="bi-trash"></i></a> <a
-                                href=""><i class="bi-pencil-square"></i></a></td>
+                        <td style="color: #003092;"><?= $no++ ?></td>
+                        <td><img width="100" src="../../cover_book/<?= $rowResult['gambar_buku'] ?>"></td>
+                        <td style="color: #003092;"><?= $rowResult['judul'] ?></td>
+                        <td style="color: #003092;"><?= $rowResult['nama_kategori'] ?></td>
+                        <td style="color: #003092;"><?= $rowResult['penulis'] ?></td>
+                        <td style="color: #003092;"><?= $rowResult['penerbit'] ?></td>
+                        <td style="color: #003092;"><?= $rowResult['tahun_terbit'] ?></td>
+                        <td style="color: #003092;"><?= $rowResult['deskripsi_buku'] ?></td>
+                        <td>
+                            <a href="?page=hapus_buku&id=<?= $rowResult['id_buku']; ?>"><i class="bi-trash"></i></a>
+                            <a href="?page=edit_buku&id=<?= $rowResult['id_buku']; ?>"><i
+                                    class="bi-pencil-square"></i></a>
+                        </td>
                     </tr>
                     <?php
-              }
-                ?>
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>

@@ -21,15 +21,26 @@ include "lib/koneksi.php";
 
     .rating {
         color: #f39c12;
-        font-size: 1.2rem;
+        font-size: 14px;
     }
-
+    .title{
+        color: #003092;
+        font-family: aes;
+    }
+    .ulasan{
+        color: #003092;
+        font-family: biasa; 
+        font-size: 12px;
+    }
     small {
         position: absolute;
         bottom: 0;
         left: 0;
         margin-bottom: 10px;
         margin-left: 10px;
+        font-size: 10px; 
+        font-family: biasa; 
+   
     }
     </style>
 </head>
@@ -40,20 +51,20 @@ include "lib/koneksi.php";
         <div class="row d-flex">
             <div class="col-md-8 offset-md-2 d-flex">
                 <?php
-                 $sqlReslt = $pdo->prepare("SELECT * FROM tb_ulasan");
-                 $sqlReslt->execute();
+            //      $sqlReslt = $pdo->prepare("SELECT * FROM tb_ulasan");
+            //      $sqlReslt->execute();
      
             
-            while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
+            // while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
                 ?>
                 <div class="card mb-3 p-3 border-0 shadow-sm" style="width: 18rem;">
-                    <div class="rating"><?=$rowResult['rating']?></div>
-                    <p><?=$rowResult['judul']?></p>
-                    <p class="mt-2"><?=$rowResult['ulasan']?></p>
-                    <small class="text-muted"><?=$rowResult['id_user']?></small>
+                    <div class="rating"><i class="bi-star"></i><i class="bi-star"></i><i class="bi-star"></i><i class="bi-star"></i><i class="bi-star"></i></div>
+                    <p class="title mt-3">When The Rains Meets Hema</p>
+                    <p class="ulasan">Buku ini sangat bangus! memiliki alur yang keren!</p>
+                    <small class="text-muted">- Nia Carpanter</small>
                 </div>
                 <?php
-            }
+            
                 ?>
             </div>
         </div>

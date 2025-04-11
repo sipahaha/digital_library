@@ -45,6 +45,12 @@
               if($page=='book'){
                 include "modul/book.php";
               }
+              if($page=='pinjam'){
+                include "modul/peminjaman.php";
+              }
+              if($page=='proses'){
+                include "modul/proses_peminjaman.php";
+              }
         }else{
             include "modul/default.php";
         }

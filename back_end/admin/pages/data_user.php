@@ -12,20 +12,32 @@ include "../../lib/koneksi.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-<style>
-    h3{
-      font-family: aes;
-      color: #003092;
+    <style>
+    h3 {
+        font-family: aes;
+        color: #003092;
     }
-    th{
-      font-family: biasa;
-      
+
+    th {
+        font-family: biasa;
+
     }
-    tbody tr td{
-      font-family: biasa;
-      font-size: 14px;
+
+    tbody tr td {
+        font-family: biasa;
+        font-size: 14px;
     }
-</style>
+
+    .btn-md {
+        color: #FFF2DB;
+        background-color: #003092;
+    }
+
+    .btn-md:hover {
+        background-color: #FF9D23;
+        color: #003092;
+    }
+    </style>
 </head>
 
 <body>
@@ -35,6 +47,21 @@ include "../../lib/koneksi.php";
 
     <!-- tabel -->
     <div class="container mt-5">
+        <!-- Search Form -->
+        <!-- Search Form -->
+        <form method="GET" action="">
+            <input type="hidden" name="page" value="data_user">
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <input type="text" name="keyword" class="form-control" placeholder="Cari username/email..."
+                        value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-md">Cari</button>
+                </div>
+            </div>
+        </form>
+
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table">
@@ -49,14 +76,19 @@ include "../../lib/koneksi.php";
                 </thead>
                 <tbody>
                     <?php
-                        $no = 1;
-                        $sql = "SELECT id_user, username, nama_lengkap, email, alamat FROM tb_user WHERE role = 'pelanggan' ";
+                  $keyword = isset($_GET['keyword']) ? '%' . $_GET['keyword'] . '%' : '%';
 
-                        $stmt = $pdo->prepare($sql);
-                        $stmt->execute(); // Hanya panggil execute(), tidak perlu disimpan ke variabel
-
-                        while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) { // Ambil hasil query dari $stmt
-                        ?>
+                  $sql = "SELECT id_user, username, nama_lengkap, email, alamat
+                          FROM tb_user
+                          WHERE role = 'pelanggan' AND (username LIKE ? OR email LIKE ?)
+                          ORDER BY id_user DESC";
+                  
+                  $stmt = $pdo->prepare($sql);
+                  $stmt->execute([$keyword, $keyword]);
+                  
+                  $no = 1;
+                  while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  ?>
                     <tr>
                         <td style="color: #003092;"><?=$no++?></td>
                         <td style="color: #003092;"><?=$rowResult['username']?></td>
