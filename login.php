@@ -3,6 +3,7 @@ session_start();
 include "lib/koneksi.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_user = $_POST['id'];
     $user = $_POST['user'];
     $pass = $_POST['pass'];
 
@@ -18,9 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         
         if ($user['role'] == 'admin') {
-            echo "<script>document.location.href = 'back-end/admin/index.php';</script>";
+            echo "<script>document.location.href = 'back_end/admin/index.php';</script>";
         } elseif ($user['role'] == 'petugas') {
-            echo "<script>document.location.href = 'back-end/petugas/index.php';</script>";
+            echo "<script>document.location.href = 'back_end/petugas/index.php';</script>";
         } else {
             echo "<script>document.location.href = 'index.php';</script>";
         }
@@ -89,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="col-md-6">
                 <form action="" method="post">
-                    <input type="hidden" name="id">
+                <input type="hidden" name="id" class="form-control">
                     <div class="mb-3">
                         <label>Nama Pengguna</label>
                         <input type="text" name="user" class="form-control">
@@ -100,6 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <button type="submit" class="btn btn-md">Log In</button>
                 </form>
+                <p>Do you have account ? <a href="register.php">Sign up Here</a></p>
             </div>
         </div>
     </div>

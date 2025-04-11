@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "lib/koneksi.php";
 if (isset($_SESSION['flash'])) {
     echo "<div class='alert alert-info'>" . $_SESSION['flash'] . "</div>";
