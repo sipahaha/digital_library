@@ -8,7 +8,7 @@ include "../../lib/koneksi.php";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Data Pengguna</title>
+    <title>Data Petugas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -48,12 +48,13 @@ include "../../lib/koneksi.php";
 
 <body>
     <center>
-        <h3 class="mt-3 mb-4">Data Pengguna</h3>
+        <h3 class="mt-3 mb-4">Data Petugas</h3>
     </center>
 
     <div class="container mt-5">
+    <a href="?page=input_petugas" type="button" class="btn btn-md mb-3">Input Data Petugas</a>
         <form method="GET" action="">
-            <input type="hidden" name="page" value="data_user">
+            <input type="hidden" name="page" value="daftar_tugas">
             <div class="row mb-4">
                 <div class="col-md-4">
                     <input type="text" name="keyword" class="form-control" placeholder="Cari username/email..."
@@ -74,6 +75,7 @@ include "../../lib/koneksi.php";
                         <th style="color: #003092;">Nama Lengkap</th>
                         <th style="color: #003092;">Email</th>
                         <th style="color: #003092;">Alamat</th>
+                        <th style="color: #003092;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,7 +84,7 @@ include "../../lib/koneksi.php";
 
                   $sql = "SELECT id_user, username, nama_lengkap, email, alamat
                           FROM tb_user
-                          WHERE role = 'pelanggan' AND (username LIKE ? OR email LIKE ?)
+                          WHERE role = 'petugas' AND (username LIKE ? OR email LIKE ?)
                           ORDER BY id_user DESC";
                   
                   $stmt = $pdo->prepare($sql);
@@ -97,6 +99,12 @@ include "../../lib/koneksi.php";
                         <td style="color: #003092;"><?=$rowResult['nama_lengkap']?></td>
                         <td style="color: #003092;"><?=$rowResult['email']?></td>
                         <td style="color: #003092;"><?=$rowResult['alamat']?></td>
+                        <td>
+                            <div class="action">
+                            <a href="?page=hapus_pet&id=<?=$rowResult['id_user'];?>" class="btn btn-md"><i class="bi-trash"></i></a>
+                            <a href="?page=edit_pet&id=<?=$rowResult['id_user']?>" class="btn btn-md"><i class="bi-pencil-square"></i></a>
+                        </div>
+                        </td>
                     </tr>
                     <?php
                             }

@@ -13,33 +13,41 @@ include "../../lib/koneksi.php";
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <style>
-        h3 {
-            font-family: aes;
-            color: #003092;
-        }
+    h3 {
+        font-family: aes;
+        color: #003092;
+    }
 
-        th {
-            font-family: biasa;
-        }
+    th {
+        font-family: biasa;
+    }
 
-        tbody tr td {
-            font-size: 14px;
-            color: #003092;
-        }
+    tbody tr td {
+        font-size: 14px;
+        color: #003092;
+    }
 
-        .search-form {
-            margin: 20px 0;
-        }
+    .search-form {
+        margin: 20px 0;
+    }
 
-        .btn-md {
-            color: #FFF2DB;
-            background-color: #003092;
-        }
+    .btn-md {
+        color: #FFF2DB;
+        background-color: #003092;
+    }
 
-        .btn-md:hover {
-            background-color: #FF9D23;
-            color: #003092;
-        }
+    .btn-md:hover {
+        background-color: #FF9D23;
+        color: #003092;
+    }
+
+    .action {
+        display: flex;
+    }
+
+    .action a {
+        margin-left: 5px;
+    }
     </style>
 </head>
 
@@ -49,7 +57,6 @@ include "../../lib/koneksi.php";
     </center>
 
     <div class="container mt-3">
-        <!-- Search Form -->
         <form method="GET" action="">
             <input type="hidden" name="page" value="data_peminjaman">
             <div class="row mb-4">
@@ -64,7 +71,7 @@ include "../../lib/koneksi.php";
         </form>
 
         <!-- Tabel -->
-        <div class="table-responsive mt-3">
+        <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table">
                     <tr>
@@ -83,7 +90,7 @@ include "../../lib/koneksi.php";
                     $keyword = isset($_GET['keyword']) ? '%' . $_GET['keyword'] . '%' : '%';
 
                     $sql = "
-                        SELECT a.id_peminjaman, b.username, c.judul, a.tanggal_peminjaman, a.tanggal_pengembalian, a.status_peminjaman
+                        SELECT a.id_peminjaman, b.username, c.judul, a.tanggal_peminjaman, a.tanggal_pengembalian, a.status_peminjaman, a.denda
                         FROM tb_peminjaman a
                         INNER JOIN tb_user b ON a.id_user = b.id_user
                         INNER JOIN tb_buku c ON a.id_buku = c.id_buku
@@ -96,18 +103,23 @@ include "../../lib/koneksi.php";
 
                     while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                        <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= htmlspecialchars($rowResult['username']) ?></td>
-                            <td><?= htmlspecialchars($rowResult['judul']) ?></td>
-                            <td><?= $rowResult['tanggal_peminjaman'] ?></td>
-                            <td><?= $rowResult['tanggal_pengembalian'] ?></td>
-                            <td><?= $rowResult['status_peminjaman'] ?></td>
-                            <td>
-                                <a href="?page=hapus_pinjam&id=<?= $rowResult['id_peminjaman']; ?>"><i class="bi-trash"></i></a>
-                                <a href="?page=edit&id=<?= $rowResult['id_peminjaman']; ?>"><i class="bi-pencil-square"></i></a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td><?= $no++ ?></td>
+                        <td><?= htmlspecialchars($rowResult['username']) ?></td>
+                        <td><?= htmlspecialchars($rowResult['judul']) ?></td>
+                        <td><?= $rowResult['tanggal_peminjaman'] ?></td>
+                        <td><?= $rowResult['tanggal_pengembalian'] ?></td>
+                        <td><?= $rowResult['status_peminjaman'] ?></td>
+                        <td><?= $rowResult['denda'] ?></td>
+                        <td>
+                            <div class="action">
+                                <a href="?page=hapus_pinjam&id=<?= $rowResult['id_peminjaman']; ?>"
+                                    class="btn btn-md"><i class="bi-trash"></i></a>
+                                <a href="?page=edit_pinjam&id=<?= $rowResult['id_peminjaman']; ?>" class="btn btn-md"><i
+                                        class="bi-pencil-square"></i></a>
+                            </div>
+                        </td>
+                    </tr>
                     <?php
                     }
                     ?>

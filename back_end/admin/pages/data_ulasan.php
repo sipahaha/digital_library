@@ -37,6 +37,12 @@ include "../../lib/koneksi.php";
         background-color: #FF9D23;
         color: #003092;
     }
+    .action{
+        display: flex;
+    }
+    .action a{
+        margin-left: 5px;
+    }
     </style>
 </head>
 
@@ -45,9 +51,7 @@ include "../../lib/koneksi.php";
         <h3 class="mt-3 mb-4">Data Ulasan Pengguna</h3>
     </center>
 
-    <!-- tabel -->
     <div class="container mt-5">
-        <!-- Search Form -->
         <form method="GET" action="">
             <input type="hidden" name="page" value="data_ulasan">
             <div class="row mb-4">
@@ -61,7 +65,7 @@ include "../../lib/koneksi.php";
             </div>
         </form>
 
-        <div class="table-responsive">
+        <div class="table-responsive mt-3 ">
             <table class="table table-hover align-middle">
                 <thead class="table">
                     <tr>
@@ -98,8 +102,11 @@ include "../../lib/koneksi.php";
                         <td><?=$rowResult['judul']?></td>
                         <td><?=$rowResult['ulasan']?></td>
                         <td><?=$rowResult['rating']?></td>
-                        <td><a href="?page=hapus_ulasan&id=<?=$rowResult['id_ulasan'];?>"><i class="bi-trash"></i></a>
-                            <a href=""><i class="bi-pencil-square"></i></a>
+                        <td>
+                        <div class="action">
+                        <a href="?page=hapus_ulasan&id=<?=$rowResult['id_ulasan'];?>" class="btn btn-md"><i class="bi-trash"></i></a>
+                            <a href="?page=edit_ulasan=<?=$rowResult['id_ulasan'];?>" class="btn btn-md"><i class="bi-pencil-square"></i></a>
+                        </div>    
                         </td>
                     </tr>
                     <?php

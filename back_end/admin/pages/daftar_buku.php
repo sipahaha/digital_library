@@ -37,6 +37,12 @@ include "../../lib/koneksi.php";
         font-size: 14px;
         color: #003092;
     }
+    .action{
+        display: flex;
+    }
+    .action a{
+        margin-left: 5px;
+    }
     </style>
 </head>
 
@@ -114,10 +120,14 @@ include "../../lib/koneksi.php";
                         <td style="color: #003092;"><?= $rowResult['tahun_terbit'] ?></td>
                         <td style="color: #003092;"><?= $rowResult['deskripsi_buku'] ?></td>
                         <td>
-                            <a href="?page=hapus_buku&id=<?= $rowResult['id_buku']; ?>"><i class="bi-trash"></i></a>
-                            <a href="?page=edit_buku&id=<?= $rowResult['id_buku']; ?>"><i
-                                    class="bi-pencil-square"></i></a>
+                            <div class="action">
+                                <a href="?page=hapus_buku&id=<?= $rowResult['id_buku']; ?> " class="btn btn-md"><i
+                                        class="bi-trash"></i></a>
+                                <a href="?page=edit_buku&id=<?= $rowResult['id_buku']; ?>" class="btn btn-md"><i
+                                        class="bi-pencil-square"></i></a>
+                            </div>
                         </td>
+
                     </tr>
                     <?php
                     }

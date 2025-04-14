@@ -52,6 +52,18 @@
               if($page=='proses'){
                 include "modul/proses_peminjaman.php";
               }
+              if($page=='sukses'){
+                include "modul/sukses_pinjam.php";
+              }
+              if($page=='koleksi_buku'){
+                include "modul/koleksi_buku.php";
+              }
+              if($page=='koleksi_pinjam'){
+                include "modul/koleksi_pinjam.php";
+              }
+              if($page=='pinjam_selesai'){
+                include "modul/pinjam_selesai.php";
+              }
         }else{
             include "modul/default.php";
         }

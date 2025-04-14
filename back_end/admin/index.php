@@ -1,6 +1,10 @@
 <?php
-include "../../lib/koneksi.php";
+    session_start();
+    include "../../lib/koneksi.php";
 
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+        die("Akses Ditolak! Anda bukan Admin.");
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -25,7 +29,6 @@ include "../../lib/koneksi.php";
 
     .content {
         margin-left: 250px;
-        /* Sesuaikan dengan lebar sidebar */
         padding: 20px;
         flex-grow: 1;
     }
@@ -64,6 +67,9 @@ include "../../lib/koneksi.php";
               if($page=='data_ulasan'){
                 include "pages/data_ulasan.php";
               }
+              if($page=='data_petugas'){
+                include "pages/daftar_petugas.php";
+              }
               if($page=='input_petugas'){
                 include "pages/input_petugas.php";
               }
@@ -93,6 +99,12 @@ include "../../lib/koneksi.php";
               }
               if($page=='edit_petugas'){
                 include "pages/edit_petugas.php";
+              } 
+              if($page=='edit_ulasan'){
+                include "pages/edit_ulasan.php";
+              }
+              if($page=='edit_pinjam'){
+                include "pages/edit_pinjam.php";
               }
               if($page=='edit_kat'){
                 include "pages/edit_kat.php";

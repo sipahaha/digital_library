@@ -13,34 +13,42 @@ include "../../lib/koneksi.php";
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <style>
-        .btn-md {
-            color: #FFF2DB;
-            background-color: #003092;
-        }
+    .btn-md {
+        color: #FFF2DB;
+        background-color: #003092;
+    }
 
-        .btn-md:hover {
-            background-color: #FF9D23;
-            color: #003092;
-        }
+    .btn-md:hover {
+        background-color: #FF9D23;
+        color: #003092;
+    }
 
-        h3 {
-            font-family: aes;
-            color: #003092;
-        }
+    h3 {
+        font-family: aes;
+        color: #003092;
+    }
 
-        th {
-            font-family: biasa;
-        }
+    th {
+        font-family: biasa;
+    }
 
-        tbody tr td {
-            font-family: biasa;
-            font-size: 14px;
-            color: #003092;
-        }
+    tbody tr td {
+        font-family: biasa;
+        font-size: 14px;
+        color: #003092;
+    }
 
-        .search-form {
-            margin: 20px 0;
-        }
+    .search-form {
+        margin: 20px 0;
+    }
+
+    .action {
+        display: flex;
+    }
+
+    .action a {
+        margin-left: 5px;
+    }
     </style>
 </head>
 
@@ -55,12 +63,12 @@ include "../../lib/koneksi.php";
             <form class="d-flex search-form" method="GET">
                 <input type="hidden" name="page" value="daftar_kat">
                 <input class="form-control me-2" type="search" name="keyword" placeholder="Cari kategori..."
-                    aria-label="Search" value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>">
+                    aria-label="Search"
+                    value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>">
                 <button class="btn btn-md" type="submit">Search</button>
             </form>
         </div>
 
-        <!-- tabel -->
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table">
@@ -86,15 +94,19 @@ include "../../lib/koneksi.php";
                     
                     while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                        <tr>
-                            <td style="color: #003092;"><?= $no++ ?></td>
-                            <td><img width="100" src="../../gbrcategori/<?= $rowResult['gambar_kategori'] ?>"></td>
-                            <td style="color: #003092;"><?= $rowResult['nama_kategori'] ?></td>
-                            <td style="color: #003092;">
-                                <a href="?page=hapus_kat&id=<?= $rowResult['id_kategori']; ?>"><i class="bi-trash"></i></a>
-                                <a href="?page=edit_kat&id=<?= $rowResult['id_kategori']; ?>"><i class="bi-pencil-square"></i></a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td style="color: #003092;"><?= $no++ ?></td>
+                        <td><img width="100" src="../../gbrcategori/<?= $rowResult['gambar_kategori'] ?>"></td>
+                        <td style="color: #003092;"><?= $rowResult['nama_kategori'] ?></td>
+                        <td style="color: #003092;">
+                            <div class="action">
+                                <a href="?page=hapus_kat&id=<?= $rowResult['id_kategori']; ?>" class="btn btn-md"><i
+                                        class="bi-trash"></i></a>
+                                <a href="?page=edit_kat&id=<?= $rowResult['id_kategori']; ?>"
+                                    class="btn btn-md"><i class=" bi-pencil-square"></i></a>
+                            </div>
+                        </td>
+                    </tr>
                     <?php
                     }
                     ?>

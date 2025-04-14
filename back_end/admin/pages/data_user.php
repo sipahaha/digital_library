@@ -37,6 +37,12 @@ include "../../lib/koneksi.php";
         background-color: #FF9D23;
         color: #003092;
     }
+    .action{
+        display: flex;
+    }
+    .action a{
+        margin-left: 5px;
+    }
     </style>
 </head>
 
@@ -45,10 +51,7 @@ include "../../lib/koneksi.php";
         <h3 class="mt-3 mb-4">Data Pengguna</h3>
     </center>
 
-    <!-- tabel -->
     <div class="container mt-5">
-        <!-- Search Form -->
-        <!-- Search Form -->
         <form method="GET" action="">
             <input type="hidden" name="page" value="data_user">
             <div class="row mb-4">
@@ -96,8 +99,10 @@ include "../../lib/koneksi.php";
                         <td style="color: #003092;"><?=$rowResult['email']?></td>
                         <td style="color: #003092;"><?=$rowResult['alamat']?></td>
                         <td>
-                            <a href="?page=hapus_user&id=<?=$rowResult['id_user'];?>"><i class="bi-trash"></i></a>
-                            <a href="?page=edit&id=<?=$rowResult['id_user']?>"><i class="bi-pencil-square"></i></a>
+                            <div class="action">
+                            <a href="?page=hapus_user&id=<?=$rowResult['id_user'];?>" class="btn btn-md"><i class="bi-trash"></i></a>
+                            <a href="?page=edit_user&id=<?=$rowResult['id_user']?>" class="btn btn-md"><i class="bi-pencil-square"></i></a>
+                        </div>
                         </td>
                     </tr>
                     <?php

@@ -1,24 +1,13 @@
 <?php
 include "../../lib/koneksi.php";
 
-if (isset($_GET['id'])) {
     $id_buku = $_GET['id'];
-
     $sql = "SELECT * FROM tb_buku WHERE id_buku = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id_buku);
     $stmt->execute();
 
-    $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$data) {
-        echo "Buku tidak ditemukan!";
-        exit();
-    }
-} else {
-    echo "ID buku tidak ditemukan di URL!";
-    exit();
-}
+    $resl = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id_buku'];
@@ -74,13 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Gagal mengupdate data, silakan coba lagi.";
     }
 }
-
-// id buku nya
-    $sql = "SELECT * FROM tb_buku WHERE id_buku = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    $resl = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <html lang="en">
@@ -132,11 +114,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h4 class="mb-4">Tambah Buku</h4>
                 </center>
                 <form action="" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="id_buku" value="<?= $resl['id_buku']; ?>">
+                    <input type="hidden" name="id_buku" value="<?=$resl['id_buku']; ?>">
 
                     <div class="mb-3">
                         <label>Judul Buku</label>
-                        <input type="text" name="title" class="form-control" value="<?= $resl['judul']; ?>">
+                        <input type="text" name="title" class="form-control" value="<?=$resl['judul']; ?>">
                     </div>
 
                     <div class="mb-3">
@@ -157,27 +139,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="mb-3">
                         <label>Penulis Buku</label>
-                        <input type="text" name="writter" class="form-control" value="<?= $resl['penulis']; ?>">
+                        <input type="text" name="writter" class="form-control" value="<?=$resl['penulis']; ?>">
                     </div>
 
                     <div class="mb-3">
                         <label>Penerbit Buku</label>
-                        <input type="text" name="publish" class="form-control" value="<?= $resl['penerbit']; ?>">
+                        <input type="text" name="publish" class="form-control" value="<?=$resl['penerbit']; ?>">
                     </div>
 
                     <div class="mb-3">
                         <label>Tahun Terbit</label>
-                        <input type="text" name="year" class="form-control" value="<?= $resl['tahun_terbit']; ?>">
+                        <input type="text" name="year" class="form-control" value="<?=$resl['tahun_terbit']; ?>">
                     </div>
 
                     <div class="mb-3">
                         <label>Deskripsi</label>
                         <textarea type="text" name="desk" class="form-control"
-                            value="<?= $resl['deskripsi_buku']; ?>"></textarea>
+                            <?=$resl['deskripsi_buku']; ?>></textarea>
                     </div>
                     <div class="mb-3">
                         <label>Gambar Saat Ini:</label><br>
-                        <img src="../../cover_book/<?= $resl['gambar_buku']; ?>" alt="cover" width="120"><br><br>
+                        <img src="<?='../../cover_book/' . $resl['gambar_buku']; ?>" alt="cover" width="120"><br><br>
                         <label>Upload Gambar Baru (Opsional):</label>
                         <input type="file" name="gbr" class="form-control">
                     </div>

@@ -22,7 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   
 
     if ($stmt->execute()) {
-        header("Location: index.php");
+        echo "<p>Silahkan Login</p>";
+        header("Location: login.php");
         exit();
     }else{
         echo "Anda sudah mempunyai akun";
@@ -60,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     .col-md-6 form {
         font-size: 14px;
-        margin-top: 65px;
         margin-right: 50px;
         color: #003092;
         font-family: biasa;
@@ -77,6 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         border-color: #FF9D23;
         background-color: #FFF2DB;
     }
+    h4{
+        color: #003092;
+        font-family: aes; 
+        margin-top: 30px;
+    }
     </style>
 </head>
 
@@ -87,6 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 <center><img src="asset/img/login.png" alt="" height="auto" width="500"></center>
             </div>
             <div class="col-md-6">
+                <center><h4>Sign In Here</h4></center>
                 <form action="" method="post">
                     <input type="hidden" name="id">
                     <div class="mb-3">

@@ -30,7 +30,7 @@
     }
 
     .content-4 {
-        margin-top: 100px;
+        margin-top: 50px;
     }
 
     .content-4 h5 {
@@ -99,7 +99,7 @@
         <div class="row">
             <div class="col-lg-12 d-flex">
                 <div class="text">
-                    <h5>Hello World !!</h5>
+                    <h5>Hai, <?= htmlspecialchars($_SESSION['user']); ?> ! Selamat bekerja.</h5>
                     <p class="pt-2">Eterna Libri is more than just a digital library. We provide an exclusive,
                         elegant and
                         Start reading today and be part of a limitless literacy journey!</p>
@@ -111,8 +111,7 @@
     <div class="content-4">
         <div class="container my-5">
             <h5>Buku Rating Tertinggi</h5>
-            <a href="" class="btn btn-md mt-4 mb-4">View All →</a>
-            <div class="row" style="margin-left: 60px;">
+                <div class="row" style="margin-left: 60px;">
                 <?php
                      $sqlReslt = $pdo->prepare("SELECT * FROM tb_buku");
                      $sqlReslt->execute();

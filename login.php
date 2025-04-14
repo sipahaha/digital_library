@@ -59,10 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         background-color: #FFF2DB;
         border-radius: 20px;
     }
-
+    h2{
+        color: #003092;
+        font-family: aes;
+        margin-top: 80px;
+    }
     .col-md-6 form {
         font-size: 14px;
-        margin-top: 150px;
         margin-right: 50px;
         color: #003092;
         font-family: biasa;
@@ -79,6 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         border-color: #FF9D23;
         background-color: #FFF2DB;
     }
+    p{
+        margin-top: 30px;
+        color: #003092;
+        font-family: biasa;
+        font-size: 14px;
+    }
     </style>
 </head>
 
@@ -89,6 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <center><img src="asset/img/login.png" alt="" height="auto" width="500"></center>
             </div>
             <div class="col-md-6">
+                <center><h2 class="mb-5">Login In Here</h2></center>
                 <form action="" method="post">
                 <input type="hidden" name="id" class="form-control">
                     <div class="mb-3">
@@ -101,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <button type="submit" class="btn btn-md">Log In</button>
                 </form>
-                <p>Do you have account ? <a href="register.php">Sign up Here</a></p>
+                    <p>Don't have account ? <a href="register.php">Sign up Here</a></p>
             </div>
         </div>
     </div>

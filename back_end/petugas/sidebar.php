@@ -48,7 +48,7 @@
     border-radius: 5px;
 }
 
-.sidebar button {
+.sidebar .btn-md {
     background-color: #FF9D23;
     color: #003092;
     position: absolute;
@@ -58,7 +58,7 @@
     margin-bottom: 10px;
 }
 
-.sidebar button:hover {
+.sidebar .btn-md:hover {
     border-style: solid 1px 1px;
     border-color: #FF9D23;
     color: #003092;
@@ -98,9 +98,6 @@
                 Pengguna</a>
         </li>
         <li class="nav-item">
-            <a href="?page=data_petugas" class="nav-link"><i class="bi-person-badge"></i>Tambah Petugas</a>
-        </li>
-        <li class="nav-item">
             <a href="?page=data_peminjaman" class="nav-link"><i class="bi bi-clipboard-data"></i>Riwayat
                 Peminjaman</a>
         </li>
@@ -109,5 +106,5 @@
         </li>
     </ul>
 
-    <button class="btn btn-md">Logout</button>
+    <a href="logout.php" class="btn btn-md">Logout</a>
 </nav>

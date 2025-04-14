@@ -18,13 +18,13 @@
     color: #FF9D23;
 }
 
-.navbar button {
+.navbar .btn-md {
     font-family: biasa;
     background-color: #FF9D23;
     color: #003092;
 }
 
-.navbar button:hover {
+.navbar .btn-md:hover {
     font-family: biasa;
     border-style: solid 1px 1px;
     border-color: #FF9D23;
@@ -49,7 +49,7 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo isset($_SESSION['id']) ? '?page=koleksi' : 'login.php'; ?>">
+                    <a class="nav-link" href="<?php echo isset($_SESSION['id']) ? '?page=koleksi_buku' : 'login.php'; ?>">
                         My Collection   
                     </a>
                 </li>
@@ -64,10 +64,10 @@
             </ul>
 
             <?php if (isset($_SESSION['id'])): ?>
-                <span class="navbar-text me-3">Halo, <?= htmlspecialchars($_SESSION['user']); ?></span>
-                <a href="logout.php" class="btn btn-md btn-outline-danger">Logout</a>
+                <a href="?page=koleksi_pinjam&id_user=<?= $_SESSION['id'] ?>" class="btn btn-md me-2"><i class="bi-archive-fill"></i></a>
+                <a href="logout.php" class="btn btn-md">Logout</a>
             <?php else: ?>
-                <a href="login.php" class="btn btn-md btn-outline-primary">Login</a>
+                <a href="login.php" class="btn btn-md">Login</a>
             <?php endif; ?>
         </div>
     </div>

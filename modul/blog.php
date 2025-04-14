@@ -9,22 +9,12 @@
         font-family: aes;
         margin-top: 100px;
     }
-
-    .content-3 .btn {
-        margin-top: 20px;
-        font-family: biasa;
-        background-color: #FF9D23;
+    .col-lg-6 p {
         color: #003092;
-    }
-
-    .content-3 .btn:hover {
-        margin-top: 20px;
         font-family: biasa;
-        border-style: solid 1px 1px;
-        border-color: #FF9D23;
-        color: #003092;
+        font-size: 15px;
+        margin-top: 25px;
     }
-
     .content-3 img {
         margin-inline-end: 10px;
     }
