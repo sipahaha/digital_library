@@ -111,33 +111,48 @@
     <div class="content-4">
         <div class="container my-5">
             <h5>Buku Rating Tertinggi</h5>
-                <div class="row" style="margin-left: 60px;">
+            <div class="row" style="margin-left: 60px;">
                 <?php
-                     $sqlReslt = $pdo->prepare("SELECT * FROM tb_buku");
-                     $sqlReslt->execute();
-                
-                while($rowResult = $sqlReslt->fetch(PDO::FETCH_ASSOC)) {
-                    ?>
+
+                    $stmt = $pdo->query("
+                    SELECT tb_buku.*, AVG(tb_ulasan.rating) as rata 
+                    FROM tb_buku 
+                    LEFT JOIN tb_ulasan ON tb_buku.id_buku = tb_ulasan.id_buku 
+                    GROUP BY tb_buku.id_buku 
+                    ORDER BY rata DESC 
+                    LIMIT 8
+                    ");
+
+                    while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $rating = round($rowResult['rata']);
+                    $ratingDecimal = number_format($rowResult['rata'], 1);
+                ?>
 
                 <div class="col-md-3 mt-4 d-flex">
                     <div class="card">
-                        <a href="" style=" text-decoration: none;">
+                        <a href="?page=detail&idbuku=<?= $rowResult['id_buku']; ?>" style="text-decoration: none;">
                             <div class="cover">
-                                <center><img src="../../cover_book/<?=$rowResult['gambar_buku']?>" alt="" width="140">
+                                <center><img src="../../cover_book/<?= $rowResult['gambar_buku'] ?>" alt="" width="140">
                                 </center>
                             </div>
                             <div class="detail text-center">
-                                <b><?=$rowResult['judul']?></b><br>
-                                <p>rating bentuk angka</p><br>
-                                <i><?=$rowResult['penulis']?></i>
-
+                                <b><?= $rowResult['judul'] ?></b><br>
+                                <i><?= $rowResult['penulis'] ?></i>
+                                <p>
+                                    <?php
+                                    for ($i = 1; $i <= 5; $i++) {
+                                        echo ($i <= $rating) ? "&#9733;" : "&#9734;";
+                                    }
+                                    echo " ($ratingDecimal / 5)";
+                                    ?>
+                                </p>
                             </div>
                         </a>
                     </div>
                 </div>
-                <?php
-                }
-                    ?>
+
+                <?php } ?>
+
             </div>
         </div>
 

@@ -61,7 +61,8 @@ include "lib/koneksi.php";
                 INNER JOIN tb_buku c ON a.id_buku = c.id_buku";
                 $sqlReslt = $pdo->prepare($sql);
                 $sqlReslt->execute();
-
+                
+                $id_buku = $rowResult['id_buku'];
                 $avg = $pdo->prepare("SELECT AVG(rating) as rata_rating FROM tb_ulasan WHERE id_buku = ?");
                 $avg->execute([$id_buku]);
                 $dataAvg = $avg->fetch(PDO::FETCH_ASSOC);

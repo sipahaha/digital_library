@@ -13,8 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['lama'])) {
     $tanggal_pengembalian = date('Y-m-d', strtotime("+$lama days"));
     $id_user = $_SESSION['id']; 
     $status = 'borrowed';
+    $denda = '0';
     
-    $cek = $pdo->prepare("SELECT * FROM tb_peminjaman WHERE id_user = :id_user AND id_buku = :id_buku AND status_peminjaman = 'Dipinjam'");
+    $cek = $pdo->prepare("SELECT * FROM tb_peminjaman WHERE id_user = :id_user AND id_buku = :id_buku AND status_peminjaman = 'orrowed'");
     $cek->execute([
         ':id_user' => $id_user,
         ':id_buku' => $id_buku

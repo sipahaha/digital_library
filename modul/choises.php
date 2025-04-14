@@ -84,15 +84,18 @@
             <div class="row" style="margin-left: 60px;">
                 <?php
 
-                $stmt = $pdo->query("SELECT * FROM tb_buku");
-                while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    $id_buku = $rowResult['id_buku'];
+                    $stmt = $pdo->query("
+                    SELECT tb_buku.*, AVG(tb_ulasan.rating) as rata 
+                    FROM tb_buku 
+                    LEFT JOIN tb_ulasan ON tb_buku.id_buku = tb_ulasan.id_buku 
+                    GROUP BY tb_buku.id_buku 
+                    ORDER BY rata DESC 
+                    LIMIT 8
+                    ");
 
-                    $stmtRating = $pdo->prepare("SELECT AVG(rating) as rata FROM tb_ulasan WHERE id_buku = ?");
-                    $stmtRating->execute([$id_buku]);
-                    $rRating = $stmtRating->fetch();
-                    $rating = round($rRating['rata']);
-                    $ratingDecimal = number_format($rRating['rata'], 1);
+                    while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $rating = round($rowResult['rata']);
+                    $ratingDecimal = number_format($rowResult['rata'], 1);
                 ?>
 
                 <div class="col-md-3 mt-4 d-flex">
@@ -123,9 +126,4 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+   
