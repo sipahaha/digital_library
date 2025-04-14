@@ -7,7 +7,7 @@ $stmt->bindParam(':id', $id);
 $stmt->execute();
 
 $view = $stmt->fetch(PDO::FETCH_ASSOC);
-$id_kat = $view['id_kategori'];
+
 ?>
 <style>
     h2{
@@ -65,10 +65,19 @@ $id_kat = $view['id_kategori'];
     <center><h2><?= $view['nama_kategori']; ?></h2></center>
 
     <?php
-    $sql = "SELECT * FROM tb_buku WHERE id_kategori = :id_kat";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':id_kat', $id_kat);
-    $stmt->execute();
+   $id_kategori = $view['id_kategori']; 
+
+   $sql = "SELECT b.* 
+       FROM tb_buku b
+       INNER JOIN kategoribuku_relasi r ON b.id_buku = r.id_buku
+       INNER JOIN tb_kategoribuku k ON r.id_kategori = k.id_kategori
+       WHERE k.id_kategori = :id_kategori";
+   
+   $stmt = $pdo->prepare($sql);
+   $stmt->bindParam(':id_kategori', $id_kategori, PDO::PARAM_INT);
+   $stmt->execute();
+
+
 
     while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $id_buku = $rowResult['id_buku']; 
@@ -91,17 +100,12 @@ $id_kat = $view['id_kategori'];
                         <b><?= $rowResult['judul'] ?></b><br>
                         <i><?= $rowResult['penulis'] ?></i>
                         <p>
-                            <?php
-                            if ($rating == 0) {
-                                echo "Belum ada rating";
-                            } else {
-                                for ($i = 1; $i <= 5; $i++) {
-                                    echo ($i <= $rating) ? "&#9733;" : "&#9734;";
-                                }
-                                echo " ($ratingDecimal / 5)";
-                            }
-                            
-                            ?>
+                        <?php
+                                    for ($i = 1; $i <= 5; $i++) {
+                                        echo ($i <= $rating) ? "&#9733;" : "&#9734;";
+                                    }
+                                    echo " ($ratingDecimal / 5)";
+                                    ?>
                         </p>
                     </div>
                 </a>

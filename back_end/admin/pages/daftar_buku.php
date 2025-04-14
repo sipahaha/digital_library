@@ -76,7 +76,6 @@ include "../../lib/koneksi.php";
                         <th style="color: #003092;">No</th>
                         <th style="color: #003092;">Cover Book</th>
                         <th style="color: #003092;">Judul Buku</th>
-                        <th style="color: #003092;">Kategori Buku</th>
                         <th style="color: #003092;">Penulis</th>
                         <th style="color: #003092;">Penerbit</th>
                         <th style="color: #003092;">Tahun Terbit</th>
@@ -90,21 +89,19 @@ include "../../lib/koneksi.php";
                     $keyword = isset($_GET['keyword']) ? '%' . $_GET['keyword'] . '%' : '%';
 
                     $sqlReslt = $pdo->prepare("
-                        SELECT * FROM tb_buku a 
-                        INNER JOIN tb_kategoribuku b ON a.id_kategori = b.id_kategori 
-                        WHERE a.judul LIKE :judul 
-                            OR a.penulis LIKE :penulis 
-                            OR a.penerbit LIKE :penerbit 
-                            OR b.nama_kategori LIKE :kategori
-                        ORDER BY a.id_buku DESC
-                    ");
-                    
+                    SELECT *
+                    FROM tb_buku 
+                    WHERE judul LIKE :judul 
+                    OR penulis LIKE :penulis 
+                    OR penerbit LIKE :penerbit 
+                    ORDER BY id_buku DESC
+                ");
+                
                     $sqlReslt->bindValue(':judul', $keyword);
                     $sqlReslt->bindValue(':penulis', $keyword);
                     $sqlReslt->bindValue(':penerbit', $keyword);
-                    $sqlReslt->bindValue(':kategori', $keyword);
-                    
                     $sqlReslt->execute();
+                    
                     
                     
 
@@ -114,7 +111,6 @@ include "../../lib/koneksi.php";
                         <td style="color: #003092;"><?= $no++ ?></td>
                         <td><img width="100" src="../../cover_book/<?= $rowResult['gambar_buku'] ?>"></td>
                         <td style="color: #003092;"><?= $rowResult['judul'] ?></td>
-                        <td style="color: #003092;"><?= $rowResult['nama_kategori'] ?></td>
                         <td style="color: #003092;"><?= $rowResult['penulis'] ?></td>
                         <td style="color: #003092;"><?= $rowResult['penerbit'] ?></td>
                         <td style="color: #003092;"><?= $rowResult['tahun_terbit'] ?></td>

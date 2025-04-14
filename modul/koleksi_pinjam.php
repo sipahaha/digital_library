@@ -25,7 +25,7 @@ h2 {
 }
 .col-md-3 .card {
     width: 200px;
-    height: 380px;
+    height: 420px;
 }
 .card img {
     margin-top: 18px;
@@ -82,6 +82,15 @@ h2 {
                     $stmt->execute([':id_user' => $_SESSION['id']]);
 
                     while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        $tgl_kembali = new DateTime($rowResult['tanggal_pengembalian']);
+                        $today = new DateTime();
+                        $denda = 0;
+
+                    if ($today > $tgl_kembali && $rowResult['status_peminjaman'] === 'borrowed') {
+                        $selisih = $today->diff($tgl_kembali)->days;
+                        $denda = $selisih * 5000;
+                    }
+                    $btnClass = $denda > 0 ? 'btn btn-danger' : 'btn btn-md';
                 ?>
 
         <div class="col-md-3 mt-4 d-flex">
@@ -94,7 +103,10 @@ h2 {
                     <b><?= $rowResult['judul'] ?></b><br>
                     <i><?= $rowResult['penulis'] ?></i><br>
                     <p class="mt-2">Tanggal Pengembalian <br> :<?= $rowResult['tanggal_pengembalian'] ?></p>
-                    <a href="?page=pinjam_selesai&id=<?= $rowResult['id_buku'] ?>" class="btn btn-md">Pinjam Selesai</a>
+                    <?php if ($denda > 0): ?>
+                        <p style="color: red; font-weight: bold;">Denda: Rp <?= number_format($denda, 0, ',', '.') ?></p>
+                    <?php endif; ?>
+                    <a href="?page=pinjam_selesai&id=<?= $rowResult['id_buku'] ?>" class="<?= $btnClass ?>">Pinjam Selesai</a>
                 </div>
             </div>
         </div>

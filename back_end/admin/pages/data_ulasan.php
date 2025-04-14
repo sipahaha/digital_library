@@ -63,6 +63,8 @@ include "../../lib/koneksi.php";
                     <button type="submit" class="btn btn-md">Cari</button>
                 </div>
             </div>
+            <button type="submit" class="btn btn-md" onclick="window.print()">Print</button>
+
         </form>
 
         <div class="table-responsive mt-3 ">

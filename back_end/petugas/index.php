@@ -64,6 +64,12 @@
               if($page=='dashboard'){
                 include "pages/dashboard.php";
               }
+              if($page=='input_buku'){
+                include "pages/input_buku.php";
+              }
+              if($page=='input_kat'){
+                include "pages/input_kategori.php";
+              }
             }else{
               include "pages/dashboard.php";
             }

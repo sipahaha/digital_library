@@ -8,61 +8,55 @@ include "../../lib/koneksi.php";
     $stmt->execute();
 
     $resl = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id_buku'];
-    $title = $_POST['title'];
-    $categories = $_POST['categories'];
-    $writter = $_POST['writter'];
-    $publisher = $_POST['publish'];
-    $year = $_POST['year'];
-    $desk = $_POST['desk'];
-    $folder = '../../cover_book/';
-
-    if (isset($_FILES['gbr']) && $_FILES['gbr']['error'] == 0) {
-        $file = $_FILES['gbr']['name'];
-        move_uploaded_file($_FILES['gbr']['tmp_name'], $folder . $file);
-
-        $sql = "UPDATE tb_buku 
-                SET judul = :title, 
-                    id_kategori = :categories, 
-                    penulis = :writter, 
-                    penerbit = :publisher, 
-                    tahun_terbit = :year,
-                    deskripsi_buku = :desk, 
-                    gambar_buku = :file 
-                WHERE id_buku = :id";
-    } else {
-        $sql = "UPDATE tb_buku 
-                SET judul = :title, 
-                    id_kategori = :categories, 
-                    penulis = :writter, 
-                    penerbit = :publisher, 
-                    tahun_terbit = :year,
-                    deskripsi_buku = :desk 
-                WHERE id_buku = :id";
+    
+    $stmt = $pdo->prepare("SELECT * FROM tb_kategoribuku");
+    $stmt->execute();
+    $kategoriList = $stmt->fetchAll();
+    
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id = $_POST['id_buku'];
+        $title = $_POST['title'];
+        $kategori = $_POST['kategori'];
+        $writter = $_POST['writter'];
+        $publisher = $_POST['publish'];
+        $year = $_POST['year'];
+        $desk = $_POST['desk'];
+        $folder = '../../cover_book/';
+    
+        $stmt = $pdo->prepare("SELECT gambar_buku FROM tb_buku WHERE id_buku = ?");
+        $stmt->execute([$id]);
+        $old = $stmt->fetch();
+        $oldFile = $old['gambar_buku'];
+   
+        if (isset($_FILES['gbr']) && $_FILES['gbr']['error'] == 0) {
+            $file = $_FILES['gbr']['name'];
+            move_uploaded_file($_FILES['gbr']['tmp_name'], $folder . $file);
+    
+            if ($oldFile && file_exists($folder . $oldFile)) {
+                unlink($folder . $oldFile);
+            }
+        } else {
+            $file = $oldFile;
+        }
+    
+        $sql = "UPDATE tb_buku SET judul = ?, penulis = ?, penerbit = ?, tahun_terbit = ?, deskripsi_buku = ?, gambar_buku = ? WHERE id_buku = ?";
+        $stmt = $pdo->prepare($sql);
+        $success = $stmt->execute([$title, $writter, $publisher, $year, $desk, $file, $id]);
+    
+        if ($success) {
+            $pdo->prepare("DELETE FROM kategoribuku_relasi WHERE id_buku = ?")->execute([$id]);
+    
+            $stmtRelasi = $pdo->prepare("INSERT INTO kategoribuku_relasi (id_buku, id_kategori) VALUES (?, ?)");
+            foreach ($kategori as $id_kat) {
+                $stmtRelasi->execute([$id, $id_kat]);
+            }
+    
+            header("Location: ?page=daftar_buku");
+            exit();
+        } else {
+            echo "Gagal mengupdate data buku.";
+        }
     }
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(":id", $id);
-    $stmt->bindParam(":title", $title);
-    $stmt->bindParam(":categories", $categories);
-    $stmt->bindParam(":writter", $writter);
-    $stmt->bindParam(":publisher", $publisher);
-    $stmt->bindParam(":year", $year);
-    $stmt->bindParam(":desk", $desk);
-
-    if (isset($file)) {
-        $stmt->bindParam(":file", $file);
-    }
-
-    if ($stmt->execute()) {
-        header("Location: ?page=daftar_buku");
-        exit();
-    } else {
-        echo "Gagal mengupdate data, silakan coba lagi.";
-    }
-}
 ?>
 <!doctype html>
 <html lang="en">
@@ -122,19 +116,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div class="mb-3">
-                        <label>Kategori Buku</label>
-                        <select name="categories" class="form-control">
-                            <?php
-            $sqlkat = "SELECT * FROM tb_kategoribuku";
-            $stmtkat = $pdo->prepare($sqlkat);
-            $stmtkat->execute();
-            $categories = $stmtkat->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($categories as $result) {
-                $selected = ($resl['id_kategori'] == $result['id_kategori']) ? "selected" : "";
-                echo "<option value='".$result['id_kategori']."' $selected>".$result['nama_kategori']."</option>";
-            }
-            ?>
-                        </select>
+                    <label>Kategori:</label><br>
+                    <?php foreach ($kategoriList as $kat): ?>
+                        <input type="checkbox" name="kategori[]" value="<?= $kat['id_kategori'] ?>"> <?= $kat['nama_kategori'] ?><br>
+                    <?php endforeach; ?>
+
                     </div>
 
                     <div class="mb-3">

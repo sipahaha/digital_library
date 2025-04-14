@@ -68,6 +68,7 @@ include "../../lib/koneksi.php";
                     <button type="submit" class="btn btn-md">Cari</button>
                 </div>
             </div>
+            <button type="submit" class="btn btn-md" onclick="window.print()">Print</button>
         </form>
 
         <!-- Tabel -->
@@ -102,25 +103,13 @@ include "../../lib/koneksi.php";
                     $stmt->execute([$keyword, $keyword]);
 
                     while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        $tgl_kembali = strtotime($rowResult['tanggal_pengembalian']);
-                        $hari_ini = strtotime(date('Y-m-d'));
+                        $tgl_kembali = new DateTime($rowResult['tanggal_pengembalian']);
+                        $today = new DateTime();
+                        $denda = 0;
 
-                        $selisih_hari = ceil(($hari_ini - $tgl_kembali) / (60 * 60 * 24));
-                        $denda_terbaru = 0;
-
-                        if ($selisih_hari > 0 && $rowResult['status_peminjaman'] === 'borrowed') {
-                            $denda_terbaru = $selisih_hari * 5000;
-
-                            // Cek apakah denda di DB sudah sesuai
-                            if ($rowResult['denda'] != $denda_terbaru) {
-                                $updateDenda = $pdo->prepare("UPDATE tb_peminjaman SET denda = :denda WHERE id_peminjaman = :id");
-                                $updateDenda->execute([
-                                    ':denda' => $denda_terbaru,
-                                    ':id' => $rowResult['id_peminjaman']
-                                ]);
-                            }
-                        } else {
-                            $denda_terbaru = $rowResult['denda'];
+                        if ($today > $tgl_kembali && $rowResult['status_peminjaman'] === 'borrowed') {
+                            $selisih = $today->diff($tgl_kembali)->days;
+                            $denda = $selisih * 5000;
                         }
                         ?>
 
@@ -131,7 +120,9 @@ include "../../lib/koneksi.php";
                         <td><?= $rowResult['tanggal_peminjaman'] ?></td>
                         <td><?= $rowResult['tanggal_pengembalian'] ?></td>
                         <td><?= $rowResult['status_peminjaman'] ?></td>
-                        <td><?= 'Rp ' . number_format($denda_terbaru, 0, ',', '.') ?></td>
+                        <td style="color: <?= $denda > 0 ? 'red' : '#003092' ?>;">
+                            <?= $denda > 0 ? 'Rp' . number_format($denda, 0, ',', '.') : 'Tidak Ada' ?>
+                        </td>
                     
                         <td>
                             <div class="action">

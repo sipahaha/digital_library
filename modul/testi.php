@@ -13,7 +13,9 @@ include "lib/koneksi.php";
     /* .testimoni {
         margin-top: 200px;
     } */
-
+    .card{
+        margin-left: 30px;
+    }
     .text-center {
         color: #003092;
         font-family: aes;

@@ -52,8 +52,16 @@ include "lib/koneksi.php";
     <div class="row">
         <?php
       $id_buku = $_GET['idbuku'];
-      $stmt = $pdo->prepare("SELECT * FROM tb_buku a INNER JOIN tb_kategoribuku b ON a.id_kategori = b.id_kategori  WHERE id_buku = :id_buku");
+      $stmt = $pdo->prepare("SELECT * FROM tb_buku WHERE id_buku = :id_buku");
       $stmt->execute([':id_buku' => $id_buku]);
+    
+      $stmt_kat = $pdo->prepare("
+      SELECT a.nama_kategori 
+      FROM tb_kategoribuku a
+      INNER JOIN kategoribuku_relasi b ON a.id_kategori = b.id_kategori
+      WHERE b.id_buku = :id_buku");
+      $stmt_kat->execute([':id_buku' => $id_buku]);
+      $kat = $stmt_kat->fetch(PDO::FETCH_ASSOC);
 
       while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $id_buku = $rowResult['id_buku'];
@@ -63,6 +71,7 @@ include "lib/koneksi.php";
       $rRating = $stmtRating->fetch();
       $rating = round($rRating['rata']);
       $ratingDecimal = number_format($rRating['rata'], 1);
+
 
         ?>
         <div class="col-md-6">
@@ -96,7 +105,7 @@ include "lib/koneksi.php";
                 </p>
                 </div>
                 </p>
-                <p>Nama Kategori : <?= $rowResult['nama_kategori']; ?> </p>
+                <p>Nama Kategori : <?= $kat['nama_kategori']; ?> </p>
                 <p>Penerbit : <?= $rowResult['penerbit']; ?></p>
                 <p>Tahun Terbit : <?= $rowResult['tahun_terbit']; ?></p>
                 <p>Deskripsi: <br>

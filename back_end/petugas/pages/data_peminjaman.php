@@ -69,6 +69,7 @@ include "../../lib/koneksi.php";
                 </div>
             </div>
         </form>
+        <button type="submit" class="btn btn-md" onclick="window.print()">Print</button>
 
         <!-- Tabel -->
         <div class="table-responsive">
@@ -81,6 +82,8 @@ include "../../lib/koneksi.php";
                         <th style="color: #003092;">Tanggal Peminjaman</th>
                         <th style="color: #003092;">Tanggal Pengembalian</th>
                         <th style="color: #003092;">Status</th>
+                        <th style="color: #003092;">Denda</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -101,6 +104,14 @@ include "../../lib/koneksi.php";
                     $stmt->execute([$keyword, $keyword]);
 
                     while ($rowResult = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        $tgl_kembali = new DateTime($rowResult['tanggal_pengembalian']);
+                        $today = new DateTime();
+                        $denda = 0;
+
+                        if ($today > $tgl_kembali && $rowResult['status_peminjaman'] === 'borrowed') {
+                            $selisih = $today->diff($tgl_kembali)->days;
+                            $denda = $selisih * 5000;
+                        }
                     ?>
                     <tr>
                         <td><?= $no++ ?></td>
@@ -109,7 +120,9 @@ include "../../lib/koneksi.php";
                         <td><?= $rowResult['tanggal_peminjaman'] ?></td>
                         <td><?= $rowResult['tanggal_pengembalian'] ?></td>
                         <td><?= $rowResult['status_peminjaman'] ?></td>
-                        <td><?= $rowResult['denda'] ?></td>
+                        <td style="color: <?= $denda > 0 ? 'red' : '#003092' ?>;">
+                            <?= $denda > 0 ? 'Rp' . number_format($denda, 0, ',', '.') : 'Tidak Ada' ?>
+                        </td>
                     </tr>
                     <?php
                     }
