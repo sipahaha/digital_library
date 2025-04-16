@@ -93,7 +93,7 @@
                                 <center><img src="cover_book/<?= $rowResult['gambar_buku'] ?>" alt="" width="140">
                                 </center>
                             </div>
-                            <div class="detail text-center">
+                            <div class="detail text-center"">
                                 <b><?= $rowResult['judul'] ?></b><br>
                                 <i><?= $rowResult['penulis'] ?></i>
                                 <p>

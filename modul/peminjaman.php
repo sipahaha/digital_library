@@ -7,13 +7,11 @@ $stmt->execute([$id_buku]);
 $buku = $stmt->fetch();
 
 $tanggal_peminjaman = date('Y-m-d');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['lama'])) {
-    $lama = (int) $_POST['lama'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $lama = $_POST['lama'];
     $tanggal_pengembalian = date('Y-m-d', strtotime("+$lama days"));
     $id_user = $_SESSION['id']; 
     $status = 'borrowed';
-    $denda = '0';
     
     $cek = $pdo->prepare("SELECT * FROM tb_peminjaman WHERE id_user = :id_user AND id_buku = :id_buku AND status_peminjaman = 'orrowed'");
     $cek->execute([
@@ -25,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['lama'])) {
         echo "<script>alert('Buku ini sudah Anda pinjam.'); window.location.href='?page=koleksi_pinjam';</script>";
     } else {
    
-    $sql = "INSERT INTO tb_peminjaman (id_user, id_buku, tanggal_peminjaman, tanggal_pengembalian, status_peminjaman, denda)
-            VALUES (:id_user, :id_buku, :tgl_pinjam, :tgl_kembali, :status, 0)";
+    $sql = "INSERT INTO tb_peminjaman (id_user, id_buku, tanggal_peminjaman, tanggal_pengembalian, status_peminjaman)
+            VALUES (:id_user, :id_buku, :tgl_pinjam, :tgl_kembali, :status)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':id_user' => $id_user,
@@ -89,14 +87,8 @@ form {
                     <input class="form-control" type="date" value="<?= $tanggal_peminjaman ?>" readonly>
                 </div>
                 <div class="mb-3">
-                    <label>Berapa Lama Peminjaman:</label>
-                    <select class="form-control" name="lama" required>
-                        <option value="">Pilih</option>
-                        <option value="1">1 Hari</option>
-                        <option value="3">3 Hari</option>
-                        <option value="7">7 Hari</option>
-                        <option value="14">14 Hari</option>
-                    </select>
+                    <label>Lama Peminjaman (hari):</label>
+                    <input class="form-control" type="number" name="lama" value="14" min="1" readonly>
                 </div>
                 <button class="btn btn-md" type="submit">Konfirmasi Peminjaman</button>
             </form>

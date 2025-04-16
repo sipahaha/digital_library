@@ -76,7 +76,6 @@ include "../../lib/koneksi.php";
                         <th style="color: #003092;">Judul Buku</th>
                         <th style="color: #003092;">Ulasan</th>
                         <th style="color: #003092;">Rating</th>
-                        <th style="color: #003092;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,10 +104,6 @@ include "../../lib/koneksi.php";
                         <td><?=$rowResult['ulasan']?></td>
                         <td><?=$rowResult['rating']?></td>
                         <td>
-                        <div class="action">
-                        <a href="?page=hapus_ulasan&id=<?=$rowResult['id_ulasan'];?>" class="btn btn-md"><i class="bi-trash"></i></a>
-                            <a href="?page=edit_ulasan=<?=$rowResult['id_ulasan'];?>" class="btn btn-md"><i class="bi-pencil-square"></i></a>
-                        </div>    
                         </td>
                     </tr>
                     <?php

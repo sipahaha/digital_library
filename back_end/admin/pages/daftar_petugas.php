@@ -103,6 +103,7 @@ include "../../lib/koneksi.php";
                             <div class="action">
                             <a href="?page=hapus_pet&id=<?=$rowResult['id_user'];?>" class="btn btn-md"><i class="bi-trash"></i></a>
                             <a href="?page=edit_pet&id=<?=$rowResult['id_user']?>" class="btn btn-md"><i class="bi-pencil-square"></i></a>
+                            <a href="?page=set_admin&id=<?=$rowResult['id_user']?>" class="btn btn-md"><i class="bi-person-check"></i> Set as Admin</a>
                         </div>
                         </td>
                     </tr>

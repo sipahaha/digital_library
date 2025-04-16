@@ -70,6 +70,12 @@
               if($page=='input_kat'){
                 include "pages/input_kategori.php";
               }
+              if($page=='detail'){
+                include "pages/detail.php";
+              }
+              if($page=='ubah_status'){
+                include "pages/ubah_status.php";
+              }
             }else{
               include "pages/dashboard.php";
             }

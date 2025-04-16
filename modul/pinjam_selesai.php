@@ -1,25 +1,32 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$id_user = $_SESSION['id'];
 include "lib/koneksi.php";
 
 $id = $_GET['id'];
-$sql = "SELECT * FROM tb_peminjaman a
+
+$sql = "SELECT a.id_peminjaman, a.id_user, a.id_buku, b.username, c.judul 
+        FROM tb_peminjaman a
         INNER JOIN tb_user b ON a.id_user = b.id_user
         INNER JOIN tb_buku c ON a.id_buku = c.id_buku 
-        WHERE a.id_buku = :id"; 
+        WHERE a.id_peminjaman = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':id', $id);
-$stmt->execute(); 
+$stmt->execute();
 $resl = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$sql_status = "UPDATE tb_peminjaman SET status_peminjaman = 'returned' WHERE id_buku = :id";
-$stmt = $pdo->prepare($sql_status);
-$stmt->bindParam(':id', $id);
-$stmt->execute();
+
+if (!$resl) {
+    echo "Data peminjaman tidak ditemukan!";
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $ulasan = $_POST['ulasan'];
     $rate = $_POST['rating'];
-    $id_user = $resl['id_user'];
+    $id_user = $_SESSION['id'];
     $id_buku = $resl['id_buku'];
 
     $sql = "INSERT INTO tb_ulasan (id_user, id_buku, ulasan, rating) VALUES (?, ?, ?, ?)";
@@ -49,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 .col-md-8 h4 {
     font-family: aes;
     color: #003092;
-
 }
 
 .col-md-8 .btn {
@@ -60,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     font-size: 14px;
     background-color: #003092;
 }
+
 .rating {
     display: flex;
     flex-direction: row-reverse;
@@ -83,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     color: gold;
 }
 </style>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -95,12 +103,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="mb-3">
                     <label class="form-label">Username</label>
-                    <input type="text" name="user" class="form-control" id="" value="<?= htmlspecialchars($resl['username']) ?>" readonly>
+                    <input type="text" name="user" class="form-control" value="<?= htmlspecialchars($_SESSION['user']) ?>" readonly>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Judul Buku</label>
-                    <input type="text" name="title" class="form-control" id="" value="<?= htmlspecialchars($resl['judul']) ?>" readonly>
+                    <input type="text" name="title" class="form-control" value="<?= htmlspecialchars($resl['judul']) ?>" readonly>
                 </div>
 
                 <div class="mb-3">

@@ -53,7 +53,7 @@ include "lib/koneksi.php";
 
 <body>
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Testimonial Pelanggan</h2>
+        <h2 class="text-center mb-4">Testimoni Pelanggan</h2>
         <div class="row d-flex">
             <div class="col-md-8 offset-md-2 d-flex">
                 <?php

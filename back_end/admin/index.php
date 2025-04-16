@@ -100,9 +100,6 @@
               if($page=='edit_petugas'){
                 include "pages/edit_petugas.php";
               } 
-              if($page=='edit_ulasan'){
-                include "pages/edit_ulasan.php";
-              }
               if($page=='edit_pinjam'){
                 include "pages/edit_pinjam.php";
               }
@@ -111,6 +108,18 @@
               }
               if($page=='edit_user'){
                 include "pages/edit_user.php";
+              }
+              if($page=='detail'){
+                include "pages/detail.php";
+              }
+              if($page=='set_denda'){
+                include "pages/set.php";
+              }
+              if($page=='edit_denda'){
+                include "pages/edit_denda.php";
+              }
+              if($page=='set_admin'){
+                include "pages/set_admin.php";
               }
             }else{
               include "pages/dashboard.php";

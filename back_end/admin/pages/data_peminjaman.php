@@ -82,6 +82,7 @@ include "../../lib/koneksi.php";
                         <th style="color: #003092;">Tanggal Peminjaman</th>
                         <th style="color: #003092;">Tanggal Pengembalian</th>
                         <th style="color: #003092;">Status</th>
+                        <th style="color: #003092;">Denda</th>
                         <th style="color: #003092;">Action</th>
                     </tr>
                 </thead>
@@ -91,7 +92,7 @@ include "../../lib/koneksi.php";
                     $keyword = isset($_GET['keyword']) ? '%' . $_GET['keyword'] . '%' : '%';
 
                     $sql = "
-                        SELECT a.id_peminjaman, b.username, c.judul, a.tanggal_peminjaman, a.tanggal_pengembalian, a.status_peminjaman, a.denda
+                        SELECT a.id_peminjaman, b.username, c.judul, a.tanggal_peminjaman, a.tanggal_pengembalian, a.status_peminjaman
                         FROM tb_peminjaman a
                         INNER JOIN tb_user b ON a.id_user = b.id_user
                         INNER JOIN tb_buku c ON a.id_buku = c.id_buku
@@ -109,8 +110,14 @@ include "../../lib/koneksi.php";
 
                         if ($today > $tgl_kembali && $rowResult['status_peminjaman'] === 'borrowed') {
                             $selisih = $today->diff($tgl_kembali)->days;
-                            $denda = $selisih * 5000;
+
+                            $stmt = $pdo->prepare("SELECT nilai FROM tb_denda WHERE nama_pengaturan = :nama");
+                            $stmt->execute([':nama' => 'denda']);
+                            $denda_per_hari = (int) $stmt->fetchColumn();
+
+                            $denda = $selisih * $denda_per_hari;
                         }
+
                         ?>
 
                     <tr>

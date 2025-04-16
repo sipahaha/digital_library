@@ -72,11 +72,11 @@ h2 {
     <h2>Daftar Buku Dipinjam</h2>
     <div class="row" style="margin-left: 60px;">
         <?php
-
+                    $id_user = $_SESSION['id'];
                     $sql = "SELECT * FROM tb_peminjaman a   
                     INNER JOIN tb_user b ON a.id_user = b.id_user 
                     INNER JOIN tb_buku c ON a.id_buku = c.id_buku 
-                    WHERE a.id_user = :id_user AND status_peminjaman = 'borrowed'";
+                    WHERE a.id_user = :id_user";
 
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute([':id_user' => $_SESSION['id']]);
@@ -106,7 +106,7 @@ h2 {
                     <?php if ($denda > 0): ?>
                         <p style="color: red; font-weight: bold;">Denda: Rp <?= number_format($denda, 0, ',', '.') ?></p>
                     <?php endif; ?>
-                    <a href="?page=pinjam_selesai&id=<?= $rowResult['id_buku'] ?>" class="<?= $btnClass ?>">Pinjam Selesai</a>
+                    <a href="?page=pinjam_selesai&id=<?= $rowResult['id_peminjaman'] ?>" class="<?= $btnClass ?>">Beri Ulasan</a>
                 </div>
             </div>
         </div>

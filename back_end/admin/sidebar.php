@@ -101,6 +101,9 @@
             <a href="?page=data_petugas" class="nav-link"><i class="bi-person-badge"></i>Data Petugas</a>
         </li>
         <li class="nav-item">
+            <a href="?page=set_denda" class="nav-link"><i class="bi-person-badge"></i>Set Denda</a>
+        </li>
+        <li class="nav-item">
             <a href="?page=data_peminjaman" class="nav-link"><i class="bi bi-clipboard-data"></i>Riwayat
                 Peminjaman</a>
         </li>

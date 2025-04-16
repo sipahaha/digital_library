@@ -68,8 +68,8 @@ include "../../lib/koneksi.php";
                     <button type="submit" class="btn btn-md">Cari</button>
                 </div>
             </div>
+            <button type="submit" class="btn btn-md" onclick="window.print()">Print</button>
         </form>
-        <button type="submit" class="btn btn-md" onclick="window.print()">Print</button>
 
         <!-- Tabel -->
         <div class="table-responsive">
@@ -83,7 +83,6 @@ include "../../lib/koneksi.php";
                         <th style="color: #003092;">Tanggal Pengembalian</th>
                         <th style="color: #003092;">Status</th>
                         <th style="color: #003092;">Denda</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -92,7 +91,7 @@ include "../../lib/koneksi.php";
                     $keyword = isset($_GET['keyword']) ? '%' . $_GET['keyword'] . '%' : '%';
 
                     $sql = "
-                        SELECT a.id_peminjaman, b.username, c.judul, a.tanggal_peminjaman, a.tanggal_pengembalian, a.status_peminjaman, a.denda
+                        SELECT a.id_peminjaman, b.username, c.judul, a.tanggal_peminjaman, a.tanggal_pengembalian, a.status_peminjaman
                         FROM tb_peminjaman a
                         INNER JOIN tb_user b ON a.id_user = b.id_user
                         INNER JOIN tb_buku c ON a.id_buku = c.id_buku
@@ -110,19 +109,37 @@ include "../../lib/koneksi.php";
 
                         if ($today > $tgl_kembali && $rowResult['status_peminjaman'] === 'borrowed') {
                             $selisih = $today->diff($tgl_kembali)->days;
-                            $denda = $selisih * 5000;
+
+                            $stmt = $pdo->prepare("SELECT nilai FROM tb_denda WHERE nama_pengaturan = :nama");
+                            $stmt->execute([':nama' => 'denda']);
+                            $denda_per_hari = (int) $stmt->fetchColumn();
+
+                            $denda = $selisih * $denda_per_hari;
                         }
-                    ?>
+
+                        ?>
+
                     <tr>
                         <td><?= $no++ ?></td>
                         <td><?= htmlspecialchars($rowResult['username']) ?></td>
                         <td><?= htmlspecialchars($rowResult['judul']) ?></td>
                         <td><?= $rowResult['tanggal_peminjaman'] ?></td>
                         <td><?= $rowResult['tanggal_pengembalian'] ?></td>
-                        <td><?= $rowResult['status_peminjaman'] ?></td>
+                        <td>
+                            <?php if ($rowResult['status_peminjaman'] === 'borrowed'): ?>
+                            <a class="btn btn-sm" style="background-color: #FF9D23; color: #003092;" 
+                                href="?page=ubah_status&id=<?= $rowResult['id_peminjaman'] ?>&to=returned"
+                                onclick="return confirm('Yakin ingin tandai sebagai Returned?')">Tandai Returned</a>
+                            <?php else: ?>
+                            <span class="badge" style="background-color: #003092;">Returned</span>
+                            <?php endif; ?>
+                        </td>
+
                         <td style="color: <?= $denda > 0 ? 'red' : '#003092' ?>;">
                             <?= $denda > 0 ? 'Rp' . number_format($denda, 0, ',', '.') : 'Tidak Ada' ?>
                         </td>
+
+
                     </tr>
                     <?php
                     }

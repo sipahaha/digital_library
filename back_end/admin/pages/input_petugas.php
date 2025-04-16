@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   
 
     if ($stmt->execute()) {
-        echo "Data Berhasil Ditambahkan";
+        header("Location: ?page=data_petugas");
     }else{
         echo "Sudah mempunyai akun";
     }

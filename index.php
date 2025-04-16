@@ -61,19 +61,19 @@
         color: #FF9D23;
     }
 
-    .col-md-3 .isi a {
+     .isi a {
         text-decoration: none;
         color: #003092;
         line-height: 34px;
 
     }
 
-    .col-md-3 b {
+    .fft b {
         border-bottom: 2px solid;
         border-color: #003092;
     }
 
-    .col-md-3 .isi {
+    .col-md-3 .isi   {
         margin-top: 28px;
         color: #003092;
     }
@@ -152,7 +152,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3 fft">
                         <b>Our Services</b><br>
                         <div class="isi">
                             <a href="?page=book">Peminjaman Buku Secara Online</a><br>
